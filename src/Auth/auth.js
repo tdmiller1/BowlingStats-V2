@@ -43,13 +43,8 @@ export default class Auth {
           } else {
               url = `https://bowling-stats-server.herokuapp.com/users/add?id=${profile.email}&name=${profile.name}`;
           }
-          fetch(url).then(response => {
-            history.push({
-            pathname: '/home',
-            state: {
-              email: profile.email
-            }
-          })
+          fetch(url).then(() => {
+            window.location.href = '/home';
           })
         }
       }
