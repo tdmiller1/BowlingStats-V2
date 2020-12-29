@@ -7,6 +7,7 @@ import {
 import { Hidden, Drawer } from '@material-ui/core';
 import Profile from '../Profile';
 import Header from '../Header';
+import SidePanel from '../SidePanel'
 
 const Home = (props) => {
   const [ drawerOpen, setDrawerOpen ] = useState(false);
@@ -15,17 +16,17 @@ const Home = (props) => {
   function toggleDrawer(){
     setDrawerOpen(!drawerOpen);
   }
-console.log(props)
+
   return (
     <>
       <Header toggleDrawer={toggleDrawer} {...props}/>
       <Hidden only={["md","lg","xl"]}>
         <Drawer open={drawerOpen} onClose={toggleDrawer}>
-          Side Panel Component
+          <SidePanel {...props} />
         </Drawer>
       </Hidden>
       <Hidden only={["xs", "sm"]}>
-        Side Panel Component
+          <SidePanel {...props} />
       </Hidden>
       <Switch>
         <Route path={`${path}/profile`}>

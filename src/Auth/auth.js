@@ -36,7 +36,7 @@ export default class Auth {
       if(profile){
         localStorage.setItem('profile', JSON.stringify(profile))
         if(profile.email){
-          localStorage.setItem('email', JSON.stringify(profile.email))
+          localStorage.setItem('email', profile.email)
           var url = ""
           if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
               url = `http://localhost:3001/users/add?id=${profile.email}&name=${profile.name}`;

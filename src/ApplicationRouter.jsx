@@ -31,6 +31,7 @@ const RouteToHome = () => {
 
 const ApplicationRouter = (props) => {
   const { isAuthenticated } = auth;
+  const email = localStorage.getItem('email');
   return (
     <Router history={history} component={Login}>
       <Switch>
@@ -38,7 +39,7 @@ const ApplicationRouter = (props) => {
           <RouteToHome />
         </Route>
         <Route path="/home">
-          <AuthSwitch {...props} isAuthenticated={() => isAuthenticated()} />
+          <AuthSwitch {...props} email={email} isAuthenticated={() => isAuthenticated()} />
         </Route>
         <Route path="/callback" render={(props) => {
           handleAuthentication(props);
