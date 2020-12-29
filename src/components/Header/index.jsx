@@ -3,6 +3,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { Plus, LogOut, User } from 'react-feather';
 import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/core';
 import DarkModeToggle from '../DarkModeToggle';
+import './Header.scss';
 
 function logout(){
   console.log('logout')
@@ -10,9 +11,10 @@ function logout(){
 
 const Header = ({ theme, toggleTheme, toggleDrawer }) => {
   let { url } = useRouteMatch();
+
 return (
     <AppBar position='static'>
-      <Toolbar>
+      <Toolbar className={`themedToolbar-${theme}`}>
         <Hidden only={["md","lg","xl"]}>
           <IconButton color='inherit' onClick={toggleDrawer}>
             <Plus />
@@ -22,7 +24,7 @@ return (
           Bowling Stats
         </Typography>
         <Link to={`${url}/profile`}>
-          <IconButton title="Profile" color="inherit">
+          <IconButton title="Profile" className={`iconButton-${theme}`}>
             <User />
           </IconButton>
         </Link>

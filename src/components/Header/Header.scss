@@ -1,0 +1,18 @@
+.themedToolbar{
+  &-dark{
+    color: white;
+    background-color: #9067c6;
+  }
+  &-light{
+    color: black;
+    background-color: #f7ece1;
+  }
+}
+.iconButton{
+  &-dark{
+    color: white !important;
+  }
+  &-light{
+    color: black !important;
+  }
+}

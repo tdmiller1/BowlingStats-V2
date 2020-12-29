@@ -25,11 +25,18 @@ const AuthSwitch = (props) => {
   return isAuthenticated() ? <Home {...props} /> : <Login auth={auth} />
 }
 
+const RouteToHome = () => {
+  window.location.href="/home"
+}
+
 const ApplicationRouter = (props) => {
   const { isAuthenticated } = auth;
   return (
     <Router history={history} component={Login}>
       <Switch>
+        <Route exact path="/">
+          <RouteToHome />
+        </Route>
         <Route path="/home">
           <AuthSwitch {...props} isAuthenticated={() => isAuthenticated()} />
         </Route>
