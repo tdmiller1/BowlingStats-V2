@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { Hidden, Drawer } from '@material-ui/core';
-import Profile from '../Profile';
+import Profile from '../Profile/index';
 import Header from '../Header';
 import SidePanel from '../SidePanel';
 import Dashboard from './Dashboard';
