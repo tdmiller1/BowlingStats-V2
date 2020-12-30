@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import {
-  TableRow,
-  TableCell,
-  Typography, } from '@material-ui/core';
+import React from 'react';
+import { TableRow, TableCell, Typography } from '@material-ui/core';
 
 const LeaderboardTableRow = ({ username, average, maxScore, rank }) => {
   return (

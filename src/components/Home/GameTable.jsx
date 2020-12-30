@@ -23,7 +23,7 @@ const GameTable = ({ games, refreshCallback }) => {
 
   return (
     <Grid alignItems="stretch" justify="center" className="GameTable" direction='row' container >
-      <Table>
+      <Table stickyHeader >
         <TableHead>
             <TableRow>
               <TableCell className="GameTable-Header" align="center">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Globe, Users, Trash } from 'react-feather';
+import { Globe, Users } from 'react-feather';
 import {
   BottomNavigation,
   BottomNavigationAction } from '@material-ui/core';

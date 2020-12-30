@@ -9,7 +9,6 @@ import {
   TablePagination,
   IconButton,
 Typography } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -18,15 +17,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 import LeaderboardTableRow from './LeaderboardTableRow';
 
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
-
 function TablePaginationActions(props) {
-  const classes = useStyles1();
   const { count, page, rowsPerPage, onChangePage } = props;
 
   const handleFirstPageButtonClick = (event) => {
