@@ -5,9 +5,9 @@ import {Button,
   } from '@material-ui/core'
 import './SidePanel.scss';
 import 'react-day-picker/lib/style.css';
-import addGame from '../../utils/addGame';
+import { addGame } from '../../utils/gameApi';
 
-const SidePanel = ({theme}) => {
+const SidePanel = ({theme, addGameCallback}) => {
   const [gameScore, setGameScore] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -22,6 +22,7 @@ const SidePanel = ({theme}) => {
     setGameScore(null);
     setSelectedDay(null);
     setErrorMessage(null);
+    addGameCallback();
   }
 
   const handleSubmit = () => {
@@ -64,7 +65,7 @@ const SidePanel = ({theme}) => {
             },
           ]}
         />
-        <Button className={`SidePanel-SubmitButton SidePanel-SubmitButton-${theme}`} variant="contained" color="primary" type="submit">Add Game</Button>
+        <Button className="SidePanel-SubmitButton iconButton" variant="contained" color="primary" type="submit">Add Game</Button>
         {errorMessage && <h3>{errorMessage}</h3>}
       </form>
     </div>

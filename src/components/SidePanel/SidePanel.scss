@@ -1,23 +1,26 @@
 .SidePanel {
-  background-color: #67C590;
   width: 300px !important;
   padding: 20px !important;
 
   &-input {
     margin: 0px 20px 20px 20px !important;
     min-width: 250px !important;
-    background-color: 'white' !important;
-  }
-
-  &-DayPicker{
-    background-color: #121212;
-    display: flex !important;
   }
 
   &-SubmitButton{
     margin: 15px 15px 0 15px !important;
-    &-dark{
-      background-color: #9067c6 !important;
+  }
+}
+
+.Drawer {
+  &-dark{
+    .MuiPaper-root{
+      color: #FFF;
+    }
+  }
+  &-light{
+    .MuiPaper-root{
+      color: #000;
     }
   }
 }
