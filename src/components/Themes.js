@@ -17,6 +17,7 @@ export const lightTheme = {
   calendarBackground: '#cec5cd',
   sidePanelColor: '#555459',
   tableColor: '#555459',
+  backgroundLighter: '#3d3e4c',
 }
 // 555459
 export const darkTheme = {
@@ -38,4 +39,5 @@ export const darkTheme = {
   calendarBackground: '#262730',
   sidePanelColor: '#FFF',
   tableColor: '#FFF',
+  backgroundLighter: '#3d3e4c',
 }

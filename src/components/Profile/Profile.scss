@@ -1,0 +1,35 @@
+@import "../variables";
+
+.Profile {
+  &-Section {
+    background-color: $darkBackgroundLighter;
+  }
+
+  &-Picture {
+    min-width: 100px;
+    max-width: 100px;
+  }
+
+  &-first {
+    height: 125px;
+    width: 40px;
+    background-color: blue;
+  }
+  &-second {
+    height: 80px;
+    width: 40px;
+    background-color: red;
+  }
+  &-third {
+    height: 50px;
+    width: 40px;
+    background-color: green;
+  }
+  &-PodiumResult {
+    position: relative;
+    top: -25px;
+  }
+  &-Table-Footer {
+    max-height: 52px;
+  }
+}

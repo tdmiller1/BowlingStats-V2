@@ -29,5 +29,7 @@ export const GlobalStyle = createGlobalStyle`
     .MuiButton-containedPrimary:hover { background-color: ${({ theme }) => theme.headerBackgroundColorDarker} !important; }
     .DayPicker-Weekday { color: ${({ theme }) => theme.sidePanelColor}; }
     .DayPicker-NavButton { color: ${({ theme }) => theme.sidePanelColor} !important; }
+    .MuiBottomNavigation-root { background-color: ${({ theme }) => theme.calendarBackground}; color: ${({ theme }) => theme.sidePanelColor} !important; }
+    .MuiBottomNavigationAction-wrapper { background-color: ${({ theme }) => theme.calendarBackground}; color: ${({ theme }) => theme.sidePanelColor} !important; }
   }
   `
