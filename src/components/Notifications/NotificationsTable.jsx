@@ -7,17 +7,17 @@ import {
   TableHead,
   TableRow,
   Typography } from '@material-ui/core';
-import GameRow from './GameRow';
+import NotificationsTableRow from './NotificationsTableRow';
 
-const GameTable = ({ games, refreshCallback }) => {
+const NotificationsTable = ({ notifications, refreshCallback }) => {
 
   const deleteGameCallback = () => refreshCallback();
 
-  const renderGames = ({_id, score, date}) =>(
-    <GameRow key={_id}
+  const renderGames = ({_id, playerId, type}) =>(
+    <NotificationsTableRow key={_id}
       _id={_id}
-      score={score}
-      date={date}
+      playerId={playerId}
+      type={type}
       deleteGameCallback={deleteGameCallback} />
   )
 
@@ -28,24 +28,24 @@ const GameTable = ({ games, refreshCallback }) => {
             <TableRow>
               <TableCell className="GameTable-Header" align="center">
                 <Typography variant="h6" gutterBottom>
-                  Score
+                  Player Name
                 </Typography>
               </TableCell>
               <TableCell className="GameTable-Header" align="center">
                 <Typography variant="h6" gutterBottom>
-                  Date
+                  Type
                 </Typography>
               </TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
-          {games?.map(renderGames)}
+          {notifications && notifications.map(renderGames)}
         </TableBody>
       </Table>
     </Grid>
   )
 }
 
-export default GameTable;
+export default NotificationsTable;
 

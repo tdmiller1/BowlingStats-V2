@@ -7,7 +7,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'tuckermillerdev.auth0.com',
     clientID: 'Otg8g3tLLbeDgj8KsXhyyuzQgYR006Bq',
-    redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:4000/callback' : window.location.href + 'callback',
+    redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/callback' : window.location.href + 'callback',
     responseType: 'token id_token',
     scope: 'openid profile email'
   });
@@ -35,13 +35,14 @@ export default class Auth {
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if(profile){
         localStorage.setItem('profile', JSON.stringify(profile))
-        if(profile.email){
+        if(profile.sub){
           localStorage.setItem('email', profile.email)
+          localStorage.setItem('authId', profile.sub)
           var url = ""
           if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-              url = `http://localhost:3001/users/add?id=${profile.email}&name=${profile.name}`;
+              url = `http://localhost:3001/users/add?id=${profile.sub}&name=${profile.name}`;
           } else {
-              url = `https://bowling-stats-server.herokuapp.com/users/add?id=${profile.email}&name=${profile.name}`;
+              url = `https://bowling-stats-server.herokuapp.com/users/add?id=${profile.sub}&name=${profile.name}`;
           }
           fetch(url).then(() => {
             window.location.href = '/home';
@@ -57,7 +58,8 @@ export default class Auth {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('profile');
     localStorage.removeItem('email');
-    history.replace('/');
+    localStorage.removeItem('authId');
+    window.location.href = '/home';
   }
 
   isAuthenticated = () => {

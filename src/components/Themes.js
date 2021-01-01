@@ -18,6 +18,7 @@ export const lightTheme = {
   sidePanelColor: '#555459',
   tableColor: '#555459',
   backgroundLighter: '#3d3e4c',
+  acceptColor: '#00de00',
 }
 // 555459
 export const darkTheme = {
@@ -40,4 +41,5 @@ export const darkTheme = {
   sidePanelColor: '#FFF',
   tableColor: '#FFF',
   backgroundLighter: '#3d3e4c',
+  acceptColor: '#00de00',
 }

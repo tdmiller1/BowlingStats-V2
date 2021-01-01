@@ -9,18 +9,29 @@ import Profile from '../Profile/index';
 import Header from '../Header';
 import SidePanel from '../SidePanel';
 import Dashboard from './Dashboard';
-import { pullGames } from '../../utils/gameApi';
+import { pullGames, getUserInfo } from '../../utils/gameApi';
+import Notifications from '../Notifications/index';
 
 const Home = (props) => {
   const { theme } = props;
   const [games, setGames] = useState([]);
+  const [profile, setProfile] = useState(null);
 
   const refreshGames = () => {
-    pullGames().then(e => setGames(e.response.data.games.reverse()))
+    pullGames().then(e => setGames(e.response?.data?.games?.reverse()))
+  }
+
+  const pullProfile = () => {
+    getUserInfo().then(e => {
+      if(e.response?.data) {
+        setProfile(e.response.data.user[0]);
+      }
+    })
   }
 
   useEffect(() => {
     refreshGames();
+    pullProfile();
   },[]);
 
   const [ drawerOpen, setDrawerOpen ] = useState(false);
@@ -48,8 +59,13 @@ const Home = (props) => {
           </div>
         </Route>
         <Route path={`${path}/profile`}>
-          <Profile {...props} />
+          <Profile profile={profile} {...props} />
         </Route>
+        {profile &&
+          <Route path={`${path}/notifications`}>
+            <Notifications profile={profile} refreshCallback={pullProfile} {...props} />
+          </Route>
+        }
       </Switch>
     </>
   )

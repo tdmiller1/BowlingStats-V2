@@ -6,7 +6,7 @@ import './Dashboard.scss';
 import GameTable from './GameTable';
 
 const Dashboard = (props) => {
-  const {theme, games, refreshCallback} = props;
+  const {theme, games = [], refreshCallback} = props;
   const [gameData, setGameData] = useState({});
 
   function compare(a,b){

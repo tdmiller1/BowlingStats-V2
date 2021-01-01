@@ -22,6 +22,7 @@ export const GlobalStyle = createGlobalStyle`
     .DayPicker-Day--disabled { color: ${({ theme }) => theme.calendarToday} }
     .MuiButton-containedPrimary:hover { background-color: ${({ theme }) => theme.headerBackgroundColorDarker} !important; }
     .iconButton-trash { color: ${({ theme }) => theme.headerBackgroundColor} !important; }
+    .iconButton-accept { color: ${({ theme }) => theme.acceptColor} !important; }
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: ${({ theme }) => theme.sidePanelColor} !important; }
     .MuiOutlinedInput-notchedOutline { border-color: ${({ theme }) => theme.sidePanelColor} !important; }
     .MuiOutlinedInput-input { color: ${({ theme }) => theme.sidePanelColor} !important; }
