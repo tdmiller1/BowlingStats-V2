@@ -36,5 +36,10 @@ export const GlobalStyle = createGlobalStyle`
     .Mui-selected { color: ${({ theme }) => theme.headerBackgroundColor } !important };
     .MuiBottomNavigationAction-iconOnly { color: ${({ theme }) => theme.sidePanelColor} !important; };
     .Profile-Section { background-color: ${({ theme }) => theme.oddRowBackground} !important; color: ${({ theme }) => theme.text} };
+    .LandingPage-figureOneTitle { color: ${({ theme }) => theme.sidePanelColor}};
+    .LandingPage-logoText { color: ${({ theme }) => theme.sidePanelColor}};
+    .LandingPage-login { color: ${({ theme }) => theme.sidePanelColor} !important; };
+    .LandingPage-paragraph { color: ${({ theme }) => theme.sidePanelColor}};
+    .LandingPage-link { color: ${({ theme }) => theme.sidePanelColor} !important; };
   }
   `

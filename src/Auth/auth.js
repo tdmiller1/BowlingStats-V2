@@ -22,6 +22,7 @@ export default class Auth {
         this.setSession(authResult);
       } else if (err) {
         history.replace('/Home');
+        // this.logout();
         console.log(err);
       }
     });
@@ -42,9 +43,11 @@ export default class Auth {
           if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
               url = `http://localhost:3001/users/add?id=${profile.sub}&name=${profile.name}`;
           } else {
-              url = `https://bowling-stats-server.herokuapp.com/users/add?id=${profile.sub}&name=${profile.name}`;
+              url = `${process.env.REACT_APP_BACKEND_URL}users/add?id=${profile.sub}&name=${profile.name}`;
           }
           fetch(url).then(() => {
+            window.location.href = '/home';
+          }).catch(() => {
             window.location.href = '/home';
           })
         }
