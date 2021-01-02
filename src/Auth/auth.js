@@ -7,7 +7,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'tuckermillerdev.auth0.com',
     clientID: 'Otg8g3tLLbeDgj8KsXhyyuzQgYR006Bq',
-    redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/callback' : `${process.env.REACT_APP_FRONTEND_URL}/callback`,
+    redirectUri: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/callback' : 'https://bowling-stats-v2.herokuapp.com/callback',
     responseType: 'token id_token',
     scope: 'openid profile email'
   });
