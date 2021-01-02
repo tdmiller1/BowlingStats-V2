@@ -3,6 +3,8 @@ import DayPicker from 'react-day-picker';
 import {Button,
   TextField,
   } from '@material-ui/core'
+import { useAuth0 } from '@auth0/auth0-react';
+
 import './SidePanel.scss';
 import 'react-day-picker/lib/style.css';
 import { addGame } from '../../utils/gameApi';
@@ -11,6 +13,7 @@ const SidePanel = ({theme, addGameCallback}) => {
   const [gameScore, setGameScore] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleDayClick = (day, { selected }) => {
     if (day < new Date()) {
@@ -31,9 +34,11 @@ const SidePanel = ({theme, addGameCallback}) => {
     }else if(selectedDay === null || selectedDay === undefined){
       setErrorMessage("Enter Date of Game");
     }else{
-      addGame(gameScore, selectedDay).then(result => {
-        result.error ? setErrorMessage(result.error) : resetGameInfo();
-      })
+      getAccessTokenSilently().then((token) => {
+        addGame(gameScore, selectedDay, token).then(result => {
+          result.error ? setErrorMessage(result.error) : resetGameInfo();
+        })
+      });
     }
   }
 

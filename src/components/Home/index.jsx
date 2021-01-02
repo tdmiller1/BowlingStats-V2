@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Switch,
   Route,
   useRouteMatch,
 } from "react-router-dom";
 import { Hidden, Drawer } from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
+
 import Profile from '../Profile/index';
 import Header from '../Header';
 import SidePanel from '../SidePanel';
@@ -16,23 +18,31 @@ const Home = (props) => {
   const { theme } = props;
   const [games, setGames] = useState([]);
   const [profile, setProfile] = useState(null);
+  const { getAccessTokenSilently } = useAuth0();
 
-  const refreshGames = () => {
-    pullGames().then(e => setGames(e.response?.data?.games?.reverse()))
-  }
-
-  const pullProfile = () => {
-    getUserInfo().then(e => {
-      if(e.response?.data) {
-        setProfile(e.response.data.user[0]);
-      }
-    })
-  }
+  const refreshGames = useCallback(() => {
+    getAccessTokenSilently().then((token) => {
+      pullGames(token).then(e => setGames(e.response?.data?.games?.reverse()))
+    });
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
     refreshGames();
+  },[refreshGames, getAccessTokenSilently]);
+
+  const pullProfile = useCallback(() => {
+    getAccessTokenSilently().then((token) => {
+      getUserInfo(token).then(e => {
+        if(e.response?.data) {
+          setProfile(e.response.data.user[0]);
+        }
+      })
+    });
+  }, [getAccessTokenSilently]);
+
+  useEffect(() => {
     pullProfile();
-  },[]);
+  },[pullProfile])
 
   const [ drawerOpen, setDrawerOpen ] = useState(false);
   let { path } = useRouteMatch();

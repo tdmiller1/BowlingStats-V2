@@ -4,6 +4,7 @@
   "description": "Implementing Dark Mode using Styled Component",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^1.2.0",
     "@craco/craco": "^6.0.0",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
