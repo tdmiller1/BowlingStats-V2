@@ -63,28 +63,30 @@ const LandingPage = ({callback}) => {
             </div>
         </Grid>
 
-        <Grid
-            alignItems="center"
-            justify="center"
-            direction="row"
-            container>
-            <div>
-                <Typography className="LandingPage-figureOneTitle" variant='h3'>Track and Save Bowling Games</Typography>
-                <Typography className="LandingPage-paragraph">
-                    See real-time updates and tracking analytics for all of your recent and past games.
-                    Table view and Graph view provided below.
-                    <Hidden only={["sm","xs"]}>
-                    View every game you have played and how you have improved.
-                    Also can provide progression and deliver insight on how to improve your 10 frames.</Hidden>
-                </Typography>
-            </div>
-        </Grid>
-
-        <Hidden only={["xs"]}>
-            <Grid item xs={6}>
-                <img className="LandingPage-figure" src={Figure} alt='clipart-stats' />
+        <div className="flex flex-row">
+            <Grid
+                alignItems="center"
+                justify="center"
+                direction="row"
+                container>
+                <div>
+                    <Typography className="LandingPage-figureOneTitle" variant='h3'>Track and Save Bowling Games</Typography>
+                    <Typography className="LandingPage-paragraph">
+                        See real-time updates and tracking analytics for all of your recent and past games.
+                        Table view and Graph view provided below.
+                        <Hidden only={["sm","xs"]}>
+                        View every game you have played and how you have improved.
+                        Also can provide progression and deliver insight on how to improve your 10 frames.</Hidden>
+                    </Typography>
+                </div>
             </Grid>
-        </Hidden>
+
+            <Hidden only={["xs"]}>
+                <Grid item xs={6}>
+                    <img className="LandingPage-figure" src={Figure} alt='clipart-stats' />
+                </Grid>
+            </Hidden>
+        </div>
 
         <Grid container direction='row' justify="center">
             <Chart className="LandingPage-chart" type="line" data={data} />

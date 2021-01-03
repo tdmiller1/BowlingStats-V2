@@ -5,15 +5,14 @@ import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/co
 import DarkModeToggle from '../DarkModeToggle';
 import './Header.scss';
 
-
 const Header = ({ theme, toggleTheme, toggleDrawer, auth }) => {
   let { url } = useRouteMatch();
 
-const notHomePage = useMemo(() =>
-  window.location.pathname.includes("profile") || window.location.pathname.includes("notifications")
-,
-//eslint-disable-next-line
-[window.location.pathname])
+  const notHomePage = useMemo(() =>
+    window.location.pathname.includes("profile") || window.location.pathname.includes("notifications")
+  ,
+  //eslint-disable-next-line
+  [window.location.pathname])
 
 return (
     <AppBar position='static'>
