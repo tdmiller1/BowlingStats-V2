@@ -166,35 +166,25 @@ const LandingPage = ({callback}) => {
           <Divider />
       </Grid>
 
-      <Grid container className="LandingPage-footer">
-        <Grid container item direction='column' alignItems='center'>
-        </Grid>
-        <Grid container direction='column' alignItems='center'>
-          <IconButton href="mailto:tuckerdanielmiller@gmail.com" style={{backgroundColor:'transparent'}} className="LandingPage-link">
+      <Grid container className="LandingPage-footer flex flex-col md:flex-row justify-between">
+        <IconButton href="mailto:tuckerdanielmiller@gmail.com" style={{backgroundColor:'transparent'}} className="LandingPage-link">
             <Mail />
             <Hidden only={["xs"]}>contactUs@gmail.com</Hidden>
-          </IconButton>
-        </Grid>
+        </IconButton>
 
-        <Grid container direction='column' justify='space-evenly'>
-          <Grid alignItems='center' container direction='column'>
-              <IconButton href="https://www.linkedin.com/in/tuckermiller7/" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
-                <LinkedIn />
-                <Hidden only={["xs"]}>LinkedIn</Hidden>
-              </IconButton>
-          </Grid>
-          <Grid alignItems='center' container direction='column'>
-              <IconButton href="https://github.com/tdmiller1" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
-                <Github />
-                <Hidden only={["xs"]}>GitHub</Hidden>
-              </IconButton>
-          </Grid>
-          <Grid alignItems='center' container direction='column'>
-              <IconButton  href="https://tuckermillerdev.com" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
-              &copy;TuckerMillerDev
-              </IconButton>
-          </Grid>
-        </Grid>
+        <IconButton href="https://www.linkedin.com/in/tuckermiller7/" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
+            <LinkedIn />
+            <Hidden only={["xs"]}>LinkedIn</Hidden>
+        </IconButton>
+
+        <IconButton href="https://github.com/tdmiller1" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
+            <Github />
+            <Hidden only={["xs"]}>GitHub</Hidden>
+        </IconButton>
+
+        <IconButton  href="https://tuckermillerdev.com" target="#" style={{backgroundColor:'transparent'}} className="LandingPage-link">
+            &copy;TuckerMillerDev
+        </IconButton>
       </Grid>
     </div>
   )

@@ -6,7 +6,7 @@ import './Dashboard.scss';
 import GameTable from './GameTable';
 
 const Dashboard = (props) => {
-  const {theme, games = [], refreshCallback} = props;
+  const {games = [], refreshCallback} = props;
   const [gameData, setGameData] = useState({});
 
   function compare(a,b){
@@ -91,7 +91,7 @@ const Dashboard = (props) => {
     <div className="w-full p-0">
       <Grid container className="GameChart-ParentGrid">
         <Grid container className="GameChart-Grid" direction='row'>
-          <Chart className={`GameChart-${theme}`} type="line" data={gameData} />
+          <Chart className="GameChart" type="line" data={gameData} />
         </Grid>
         <GameTable {...props} games={games} refreshCallback={refreshCallback} />
       </Grid>

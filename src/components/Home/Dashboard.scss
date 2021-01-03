@@ -1,24 +1,23 @@
 .GameChart{
-  &-dark{
+  width: calc(100vw - 300px);
+  padding: 10px calc(25% - 70px);
+  @media only screen and (max-width: 600px) {
+    width:85vw;
+    padding: 10px 5%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100vw;
+    padding: 10px calc(25% - 70px);
+  }
+  @media only screen and (min-width: 960px) {
     width: calc(100vw - 300px);
     padding: 10px calc(25% - 70px);
-    @media only screen and (max-width: 600px) {
-      width:85vw;
-      padding: 10px 5%;
-    }
-    @media only screen and (min-width: 600px) {
-      width: 100vw;
-      padding: 10px calc(25% - 70px);
-    }
-    @media only screen and (min-width: 960px) {
-      width: calc(100vw - 300px);
-      padding: 10px calc(25% - 70px);
-    }
-    @media only screen and (min-width: 1300px) {
-      width: calc(100vw - 400px);
-      padding: 10px calc(25% - 70px);
-    }
   }
+  @media only screen and (min-width: 1300px) {
+    width: calc(100vw - 400px);
+    padding: 10px calc(25% - 70px);
+  }
+
   &-GridParent{
     margin: 0;
     padding: 0;
