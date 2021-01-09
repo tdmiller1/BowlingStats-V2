@@ -10,11 +10,11 @@ ReactDOM.render(
     <Auth0Provider
       domain={process.env.REACT_APP_AUTH0_DOMAIN}
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      redirectUri={window.location.origin}
+      redirectUri={process.env.REACT_APP_AUTH0_BOWLING_REDIRECT_URI}
       audience={process.env.REACT_APP_AUTH0_AUDIENCE}
       scope="read:current_user update:current_user_metadata"
     >
-    <App />
+      <App />
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

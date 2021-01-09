@@ -7,16 +7,16 @@ import { getPlayerName, acceptFriendRequest } from '../../utils/gameApi';
 
 const NotificationsTableRow = ({_id, playerId, type, deleteGameCallback}) => {
   const [playerName, setPlayerName] = useState(null);
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     getAccessTokenSilently().then((token) => {
-      getPlayerName(playerId, token).then(result => {console.log(result); setPlayerName(result.response?.data?.playerName)})
+      getPlayerName(user.sub, playerId, token).then(result => setPlayerName(result.response?.data?.playerName))
     });
-  }, [playerId, getAccessTokenSilently]);
+  }, [user, playerId, getAccessTokenSilently]);
 
   const handleAccept = () => {
-    acceptFriendRequest(playerId).then((e) => console.log(e) )
+    acceptFriendRequest(user.sub, playerId).then((e) => console.log(e) )
   };
 
   const handleDeny = () => {

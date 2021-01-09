@@ -1,49 +1,32 @@
 import React from 'react';
 import {
-  Router,
+  BrowserRouter as Router,
   Route,
   Switch,
+  Redirect
 } from "react-router-dom";
-
-import Callback from './Auth/Callback';
-import Auth from './Auth/auth';
-import history from './Auth/history';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import Login from './components/Login/index'
 import Home from './components/Home/index';
 
-const auth = new Auth();
-
-const handleAuthentication = (nextState, replace) => {
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    auth.handleAuthentication();
-  }
-}
-
-const AuthSwitch = (props) => {
-  const { isAuthenticated } = props;
-  return isAuthenticated() ? <Home {...props} /> : <Login auth={auth} />
-}
-
-const RouteToHome = () => {
-  window.location.href="/home"
-}
-
 const ApplicationRouter = (props) => {
-  const { isAuthenticated } = auth;
+  const { isAuthenticated } = useAuth0();
+
   return (
-    <Router history={history} component={Login}>
+    <Router>
       <Switch>
         <Route exact path="/">
-          <RouteToHome />
+          <Redirect
+            to={{
+              pathname: "/home",
+            }}
+          />
         </Route>
         <Route path="/home">
-          <AuthSwitch {...props} auth={auth} isAuthenticated={() => isAuthenticated()} />
+          {isAuthenticated && <Home {...props} />}
+          {!isAuthenticated && <Login />}
         </Route>
-        <Route path="/callback" render={(props) => {
-          handleAuthentication(props);
-          return <Callback {...props} />
-        }}/>
       </Switch>
     </Router>
   )

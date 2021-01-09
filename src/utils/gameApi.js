@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Host from '../config';
 
-export async function addGame(gameScore, selectedDay, token){
+export async function addGame(userId, gameScore, selectedDay, token){
   const response = await axios.post(`${Host.url}/games/add`,
   {
-    id: Host.id,
+    id: userId,
     score: gameScore,
     date: selectedDay
   },
@@ -17,8 +17,8 @@ export async function addGame(gameScore, selectedDay, token){
   return {error: null, response: response};
 }
 
-export async function pullGames(token){
-  const response = await axios.get(`${Host.url}/games/find?id=${Host.id}`, {
+export async function pullGames(userId, token){
+  const response = await axios.get(`${Host.url}/games/find?id=${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -27,7 +27,7 @@ export async function pullGames(token){
   return {error: null, response: response};
 }
 
-export async function deleteGame(gameId, token){
+export async function deleteGame(userId, gameId, token){
   const response = await axios.delete(`${Host.url}/games`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -41,8 +41,8 @@ export async function deleteGame(gameId, token){
   return {error: null, response: response};
 }
 
-export async function getUserInfo(token){
-  const response = await axios.get(`${Host.url}/users/find?id=${Host.id}`, {
+export async function getUserInfo(userId, token){
+  const response = await axios.get(`${Host.url}/users/find?id=${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

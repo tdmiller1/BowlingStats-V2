@@ -7,11 +7,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { deleteGame } from '../../utils/gameApi';
 
 const GameRow = ({_id, score, date, deleteGameCallback}) => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const handleDelete = () => {
     getAccessTokenSilently().then((token) => {
-      deleteGame(_id, token,).then(() => deleteGameCallback() )
+      deleteGame(user.sub, _id, token,).then(() => deleteGameCallback() )
     });
   };
   const parseDate = (date) => moment(date).format('MMMM DD, YYYY');

@@ -18,13 +18,13 @@ const Home = (props) => {
   const { theme } = props;
   const [games, setGames] = useState([]);
   const [profile, setProfile] = useState(null);
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const refreshGames = useCallback(() => {
     getAccessTokenSilently().then((token) => {
-      pullGames(token).then(e => setGames(e.response?.data?.games?.reverse()))
+      pullGames(user.sub, token).then(e => setGames(e.response?.data?.games?.reverse()))
     });
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user]);
 
   useEffect(() => {
     refreshGames();
@@ -32,13 +32,13 @@ const Home = (props) => {
 
   const pullProfile = useCallback(() => {
     getAccessTokenSilently().then((token) => {
-      getUserInfo(token).then(e => {
+      getUserInfo(user.sub, token).then(e => {
         if(e.response?.data) {
           setProfile(e.response.data.user[0]);
         }
       })
     });
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user]);
 
   useEffect(() => {
     pullProfile();

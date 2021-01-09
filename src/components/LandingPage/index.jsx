@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Mail, Trash2 } from 'react-feather';
 
 import {
@@ -21,6 +22,7 @@ import { ReactComponent as LinkedIn } from '../../assets/linkedin.svg'
 import "./LandingPage.scss";
 
 const LandingPage = ({callback}) => {
+const { loginWithRedirect } = useAuth0();
   const data = {
     labels: ['Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5', 'Game 6'],
     datasets: [
@@ -50,14 +52,14 @@ const LandingPage = ({callback}) => {
             <div>
               <Button
                   className="LandingPage-login"
-                  onClick={callback} >
+                  onClick={() => loginWithRedirect()} >
                   Log in
               </Button>
               <Button
                   className="LandingPage-login-signup"
                   variant='contained'
                   color='secondary'
-                  onClick={callback} >
+                  onClick={()=> loginWithRedirect()} >
                   Sign up
               </Button>
             </div>

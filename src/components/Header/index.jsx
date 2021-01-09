@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link, useRouteMatch } from "react-router-dom";
 import { Home, Plus, LogOut, User, Bell } from 'react-feather';
 import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/core';
 import DarkModeToggle from '../DarkModeToggle';
 import './Header.scss';
 
-const Header = ({ theme, toggleTheme, toggleDrawer, auth }) => {
+const Header = ({ theme, toggleTheme, toggleDrawer }) => {
+  const { logout } = useAuth0();
   let { url } = useRouteMatch();
 
   const notHomePage = useMemo(() =>
@@ -46,7 +48,7 @@ return (
             </IconButton>
           </Link>
           <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
-          <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => auth.logout()} >
+          <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout()} >
             <LogOut />
           </IconButton>
         </div>
