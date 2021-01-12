@@ -48,7 +48,7 @@ return (
             </IconButton>
           </Link>
           <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
-          <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout()} >
+          <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout({ returnTo: window.location.origin })} >
             <LogOut />
           </IconButton>
         </div>
