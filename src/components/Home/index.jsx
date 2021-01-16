@@ -11,7 +11,7 @@ import Profile from '../Profile/index';
 import Header from '../Header';
 import SidePanel from '../SidePanel';
 import Dashboard from './Dashboard';
-import { pullGames, getUserInfo } from '../../utils/gameApi';
+import { getUserInfo } from '../../utils/gameApi';
 import Notifications from '../Notifications/index';
 
 const Home = (props) => {
@@ -20,29 +20,20 @@ const Home = (props) => {
   const [profile, setProfile] = useState(null);
   const { user, getAccessTokenSilently } = useAuth0();
 
-  const refreshGames = useCallback(() => {
-    getAccessTokenSilently().then((token) => {
-      pullGames(user.sub, token).then(e => setGames(e.response?.data?.games?.reverse()))
-    });
-  }, [getAccessTokenSilently, user]);
-
-  useEffect(() => {
-    refreshGames();
-  },[refreshGames, getAccessTokenSilently]);
-
-  const pullProfile = useCallback(() => {
+  const refreshData = useCallback(() => {
     getAccessTokenSilently().then((token) => {
       getUserInfo(user.sub, token).then(e => {
         if(e.response?.data) {
-          setProfile(e.response.data.user[0]);
+          setProfile(e.response.data.player);
+          setGames(e.response?.data?.player?.games?.reverse());
         }
       })
     });
   }, [getAccessTokenSilently, user]);
 
   useEffect(() => {
-    pullProfile();
-  },[pullProfile])
+    refreshData();
+  },[refreshData])
 
   const [ drawerOpen, setDrawerOpen ] = useState(false);
   let { path } = useRouteMatch();
@@ -56,16 +47,16 @@ const Home = (props) => {
       <Header toggleDrawer={toggleDrawer} {...props}/>
       <Hidden only={["md","lg","xl"]}>
         <Drawer className={`Drawer-${theme}`} open={drawerOpen} onClose={toggleDrawer}>
-          <SidePanel {...props} addGameCallback={refreshGames} />
+          <SidePanel {...props} addGameCallback={refreshData} />
         </Drawer>
       </Hidden>
       <Switch>
         <Route exact path={`${path}`}>
           <div className="flex">
             <Hidden only={["xs", "sm"]}>
-              <SidePanel {...props} addGameCallback={refreshGames} />
+              <SidePanel {...props} addGameCallback={refreshData} />
             </Hidden>
-            <Dashboard refreshCallback={refreshGames} games={games} {...props} />
+            <Dashboard refreshCallback={refreshData} games={games} {...props} />
           </div>
         </Route>
         <Route path={`${path}/profile`}>
@@ -73,7 +64,7 @@ const Home = (props) => {
         </Route>
         {profile &&
           <Route path={`${path}/notifications`}>
-            <Notifications profile={profile} refreshCallback={pullProfile} {...props} />
+            <Notifications profile={profile} refreshCallback={refreshData} {...props} />
           </Route>
         }
       </Switch>

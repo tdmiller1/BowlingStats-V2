@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Host from '../config';
 
-export async function addGame(userId, gameScore, selectedDay, token){
-  const response = await axios.post(`${Host.url}/games/add`,
+export async function addGame(authId, gameScore, selectedDay, token){
+  const response = await axios.put(`${Host.url}/games/add`,
   {
-    id: userId,
+    authId: authId,
     score: gameScore,
     date: selectedDay
   },
@@ -17,8 +17,8 @@ export async function addGame(userId, gameScore, selectedDay, token){
   return {error: null, response: response};
 }
 
-export async function pullGames(userId, token){
-  const response = await axios.get(`${Host.url}/games/find?id=${userId}`, {
+export async function pullGames(authId, token){
+  const response = await axios.get(`${Host.url}/games/find?authId=${authId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -27,22 +27,22 @@ export async function pullGames(userId, token){
   return {error: null, response: response};
 }
 
-export async function deleteGame(userId, gameId, token){
+export async function deleteGame(authId, gameId, token){
   const response = await axios.delete(`${Host.url}/games`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     data: {
-      id: gameId,
-      playerId: Host.id,
+      authId: authId,
+      gameObjectID: gameId,
     }
 }).catch(err => console.error(err));
   if(!response) return {error: "Error, please refresh and try again", response: null}
   return {error: null, response: response};
 }
 
-export async function getUserInfo(userId, token){
-  const response = await axios.get(`${Host.url}/users/find?id=${userId}`, {
+export async function getUserInfo(authId, token){
+  const response = await axios.get(`${Host.url}/players/find?authId=${authId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -51,8 +51,8 @@ export async function getUserInfo(userId, token){
   return {error: null, response: response};
 }
 
-export async function getPlayerName(playerId, token){
-  const response = await axios.get(`${Host.url}/users/find/name?id=${playerId}`, {
+export async function getPlayerName(authId, token){
+  const response = await axios.get(`${Host.url}/players/find/name?authId=${authId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -61,8 +61,8 @@ export async function getPlayerName(playerId, token){
   return {error: null, response: response};
 }
 
-export async function acceptFriendRequest(playerId, token){
-  const response = await axios.put(`${Host.url}/users/update?friendRequestId=${playerId}&id=${Host.id}`, {
+export async function acceptFriendRequest(authId, token){
+  const response = await axios.put(`${Host.url}/players/update?friendRequestId=${authId}&id=${Host.id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -71,8 +71,8 @@ export async function acceptFriendRequest(playerId, token){
   return {error: null, response: response};
 }
 
-export async function denyFriendRequest(playerId, token){
-  const response = await axios.put(`${Host.url}/users/?id=${playerId}`).catch(err => console.error(err));
+export async function denyFriendRequest(authId, token){
+  const response = await axios.put(`${Host.url}/players/?authId=${authId}`).catch(err => console.error(err));
   if(!response) return {error: "Error, please refresh and try again", response: null}
   return {error: null, response: response};
 }
