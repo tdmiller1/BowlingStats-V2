@@ -7,13 +7,9 @@ import { loginUser } from '../utils/gameApi';
 const Callback = () => {
   const { isAuthenticated,  user, getAccessTokenSilently, isLoading } = useAuth0();
 
-  console.log("callback")
   const loginPlayer = useCallback(() => {
     getAccessTokenSilently().then((token) => {
-      console.log(user);
-      loginUser(user.sub, user.email, user.name, token).then(e => {
-        console.log(e)
-      })
+      loginUser(user.sub, user.email, user.name, token)
     });
   }, [getAccessTokenSilently, user]);
 

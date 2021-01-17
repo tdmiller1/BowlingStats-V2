@@ -24,8 +24,8 @@ const Home = (props) => {
     getAccessTokenSilently().then((token) => {
       getUserInfo(user.sub, token).then(e => {
         if(e.response?.data) {
-          setProfile(e.response.data.player);
-          setGames(e.response?.data?.player?.games?.reverse());
+          setProfile(e.response.data);
+          setGames(e.response?.data?.games?.reverse());
         }
       })
     });
