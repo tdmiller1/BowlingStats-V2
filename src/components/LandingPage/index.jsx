@@ -21,7 +21,7 @@ import { ReactComponent as Github } from '../../assets/github.svg'
 import { ReactComponent as LinkedIn } from '../../assets/linkedin.svg'
 import "./LandingPage.scss";
 
-const LandingPage = ({callback}) => {
+const LandingPage = () => {
 const { loginWithRedirect } = useAuth0();
   const data = {
     labels: ['Game 1', 'Game 2', 'Game 3', 'Game 4', 'Game 5', 'Game 6'],

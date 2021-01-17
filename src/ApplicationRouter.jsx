@@ -9,6 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Login from './components/Login/index'
 import Home from './components/Home/index';
+import Callback from './components/Callback';
+
 
 const ApplicationRouter = (props) => {
   const { isAuthenticated } = useAuth0();
@@ -26,6 +28,9 @@ const ApplicationRouter = (props) => {
         <Route path="/home">
           {isAuthenticated && <Home {...props} />}
           {!isAuthenticated && <Login />}
+        </Route>
+        <Route path="/callback">
+          <Callback />
         </Route>
       </Switch>
     </Router>

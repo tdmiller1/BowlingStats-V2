@@ -51,6 +51,22 @@ export async function getUserInfo(authId, token){
   return {error: null, response: response};
 }
 
+export async function loginUser(authId, email, playerName, token){
+  const profile = {
+    authId: authId,
+    email: email,
+    playerName: playerName
+  }
+  const response = await axios.post(`${Host.url}/players/login`, profile,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }).catch(err => console.error(err));
+  if(!response) return {error: "Error, please refresh and try again", response: null}
+  return {error: null, response: response};
+}
+
 export async function getPlayerName(authId, token){
   const response = await axios.get(`${Host.url}/players/find/name?authId=${authId}`, {
     headers: {
