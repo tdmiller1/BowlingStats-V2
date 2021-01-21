@@ -22,38 +22,8 @@ const Leaderboard = () => {
       username: 'tdmiller7',
       maxScore: 200,
       average: 30,
-      rank: 69
-    },
-    {
-      username: 'tdmiller7',
-      maxScore: 200,
-      average: 30,
-      rank: 69
-    },
-    {
-      username: 'tdmiller7',
-      maxScore: 200,
-      average: 30,
-      rank: 69
-    },
-    {
-      username: 'tdmiller7',
-      maxScore: 200,
-      average: 30,
-      rank: 69
-    },
-    {
-      username: 'tdmiller7',
-      maxScore: 200,
-      average: 30,
-      rank: 69
-    },
-    {
-      username: 'tdmiller7',
-      maxScore: 200,
-      average: 30,
-      rank: 69
-    },
+      rank: 696
+    }
   ]
 
   const globalUsers = [
@@ -62,87 +32,7 @@ const Leaderboard = () => {
       maxScore: 300,
       average: 250,
       rank: 1
-    },
-    {
-      username: '1killa',
-      maxScore: 300,
-      average: 250,
-      rank: 2
-    },
-    {
-      username: '0killa',
-      maxScore: 300,
-      average: 250,
-      rank: 3
-    },{
-      username: 'killa',
-      maxScore: 300,
-      average: 250,
-      rank: 1
-    },
-    {
-      username: '1killa',
-      maxScore: 300,
-      average: 250,
-      rank: 2
-    },
-    {
-      username: '0killa',
-      maxScore: 300,
-      average: 250,
-      rank: 3
-    },{
-      username: 'killa',
-      maxScore: 300,
-      average: 250,
-      rank: 1
-    },
-    {
-      username: '1killa',
-      maxScore: 300,
-      average: 250,
-      rank: 2
-    },
-    {
-      username: '0killa',
-      maxScore: 300,
-      average: 250,
-      rank: 3
-    },{
-      username: 'killa',
-      maxScore: 300,
-      average: 250,
-      rank: 1
-    },
-    {
-      username: '1killa',
-      maxScore: 300,
-      average: 250,
-      rank: 2
-    },
-    {
-      username: '0killa',
-      maxScore: 300,
-      average: 250,
-      rank: 3
-    },{
-      username: 'killa',
-      maxScore: 300,
-      average: 250,
-      rank: 1
-    },
-    {
-      username: '1killa',
-      maxScore: 300,
-      average: 250,
-      rank: 2
-    },
-    {
-      username: '0killa',
-      maxScore: 300,
-      average: 250,
-      rank: 3
-    },
+    }
   ]
 
   return (

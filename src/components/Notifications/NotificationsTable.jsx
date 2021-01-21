@@ -11,14 +11,13 @@ import NotificationsTableRow from './NotificationsTableRow';
 
 const NotificationsTable = ({ notifications, refreshCallback }) => {
 
-  const deleteGameCallback = () => refreshCallback();
-
-  const renderGames = ({_id, playerId, type}) =>(
-    <NotificationsTableRow key={_id}
-      _id={_id}
-      playerId={playerId}
+  const renderGames = ({sender, receiver, type, data}) =>(
+    <NotificationsTableRow key={sender}
+      sender={sender}
+      receiver={receiver}
       type={type}
-      deleteGameCallback={deleteGameCallback} />
+      data={data}
+      refreshData={refreshCallback} />
   )
 
   return (

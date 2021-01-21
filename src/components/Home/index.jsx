@@ -13,6 +13,7 @@ import SidePanel from '../SidePanel';
 import Dashboard from './Dashboard';
 import { getUserInfo } from '../../utils/gameApi';
 import Notifications from '../Notifications/index';
+import PublicProfile from '../PublicProfile/index';
 
 const Home = (props) => {
   const { theme } = props;
@@ -62,11 +63,16 @@ const Home = (props) => {
         <Route path={`${path}/profile`}>
           <Profile profile={profile} {...props} />
         </Route>
-        {profile &&
-          <Route path={`${path}/notifications`}>
-            <Notifications profile={profile} refreshCallback={refreshData} {...props} />
-          </Route>
-        }
+        {profile && (
+          <>
+            <Route path={`${path}/notifications`}>
+              <Notifications profile={profile} refreshCallback={refreshData} {...props} />
+            </Route>
+            <Route path={`${path}/u/`}>
+              <PublicProfile />
+            </Route>
+          </>
+          )}
       </Switch>
     </>
   )

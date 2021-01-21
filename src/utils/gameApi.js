@@ -77,8 +77,13 @@ export async function getPlayerName(authId, token){
   return {error: null, response: response};
 }
 
-export async function acceptFriendRequest(authId, token){
-  const response = await axios.put(`${Host.url}/players/update?friendRequestId=${authId}&id=${Host.id}`, {
+export async function acceptFriendRequest(authId, friendAuthId, token){
+  const response = await axios.put(`${Host.url}/players/add/friend`,
+  {
+    authId: authId,
+    friendAuthId: friendAuthId,
+  },
+  {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -89,6 +94,32 @@ export async function acceptFriendRequest(authId, token){
 
 export async function denyFriendRequest(authId, token){
   const response = await axios.put(`${Host.url}/players/?authId=${authId}`).catch(err => console.error(err));
+  if(!response) return {error: "Error, please refresh and try again", response: null}
+  return {error: null, response: response};
+}
+
+export async function removeNotification(authId, friendAuthId, data, token){
+  const response = await axios.put(`${Host.url}/notifications/acceptRequest`,
+  {
+    authId: authId,
+    friendAuthId: friendAuthId,
+    data: data,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch(err => console.error(err));
+  if(!response) return {error: "Error, please refresh and try again", response: null}
+  return {error: null, response: response};
+}
+
+export async function getPublicPlayerData(authId, token){
+  const response = await axios.get(`${Host.url}/players/find/publicData?authId=${authId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch(err => console.error(err));
   if(!response) return {error: "Error, please refresh and try again", response: null}
   return {error: null, response: response};
 }

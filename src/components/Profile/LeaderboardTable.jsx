@@ -67,7 +67,7 @@ function TablePaginationActions(props) {
 }
 
 const LeaderboardTable = ({ users }) => {
-  const renderTableRows = (user) => <LeaderboardTableRow {...user} />
+  const renderTableRows = (user) => <LeaderboardTableRow key={user.rank} {...user} />
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -84,7 +84,7 @@ const LeaderboardTable = ({ users }) => {
   };
 
   return (
-    <Table pageSize={5}>
+    <Table pagesize={5}>
       <TableHead>
         <TableRow>
           <TableCell align="center">

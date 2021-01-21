@@ -11,9 +11,12 @@ import Login from './components/Login/index'
 import Home from './components/Home/index';
 import Callback from './components/Callback';
 
-
 const ApplicationRouter = (props) => {
-  const { isAuthenticated } = useAuth0();
+  const { isLoading, isAuthenticated, error } = useAuth0();
+  console.log(isLoading)
+
+  if (isLoading) return <div>loading</div>
+  if (error) return <div>{error.message}</div>
 
   return (
     <Router>
