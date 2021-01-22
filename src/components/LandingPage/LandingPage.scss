@@ -1,0 +1,66 @@
+@import "../variables";
+
+.LandingPage {
+  &-container {
+    padding: 0 50px;
+    margin: 0px;
+    width: 100%;
+  }
+  &-header {
+    padding: 20px;
+    margin: 20px;
+  }
+  &-logo {
+    float:left;
+    width: 100;
+    margin: 10;
+    @media only screen and (min-width: 600px) {
+      width: 50px;
+      margin: 10px;
+    }
+  }
+  &-logoText {
+    padding-top: 25px;
+    float: right;
+  }
+  &-login {
+    text-transform: none;
+    font-size: 20px;
+    margin: 0px 10px !important;
+  }
+  &-figureOneTitle {
+    padding-bottom: 20px;
+  }
+  &-figure {
+    width: 40vw;
+    margin: 30px;
+  }
+  &-chart {
+    margin: 20px;
+    padding: 0px;
+    margin-bottom: 30px;
+    width: 100vw;
+    @media only screen and (min-width: 600px) {
+      width: 50vw;
+    }
+  }
+  &-table {
+    margin: 20px;
+    width: 50vw !important;
+    @media only screen and (max-width: 600px) {
+      width: 100vw !important;
+    }
+  }
+  &-divider {
+    padding: 40px 0px;
+  }
+  &-footer {}
+  &-footerLogo {}
+  &-link {
+    background-color: transparent;
+    font-size: 20px;
+  }
+  &-icon {
+    padding: 10px;
+  }
+}

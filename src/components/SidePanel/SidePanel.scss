@@ -1,0 +1,26 @@
+.SidePanel {
+  width: 300px !important;
+  padding: 20px !important;
+
+  &-input {
+    margin: 0px 20px 20px 20px !important;
+    min-width: 250px !important;
+  }
+
+  &-SubmitButton{
+    margin: 15px 15px 0 15px !important;
+  }
+}
+
+.Drawer {
+  &-dark{
+    .MuiPaper-root{
+      color: #FFF;
+    }
+  }
+  &-light{
+    .MuiPaper-root{
+      color: #000;
+    }
+  }
+}

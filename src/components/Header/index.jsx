@@ -1,35 +1,62 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link, useRouteMatch } from "react-router-dom";
-import { Plus, LogOut, User } from 'react-feather';
+import { Home, Plus, LogOut, User, Bell } from 'react-feather';
 import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/core';
 import DarkModeToggle from '../DarkModeToggle';
-
-function logout(){
-  console.log('logout')
-}
+import './Header.scss';
 
 const Header = ({ theme, toggleTheme, toggleDrawer }) => {
+  const { logout } = useAuth0();
   let { url } = useRouteMatch();
+
+  const notHomePage = useMemo(() =>
+    window.location.pathname.includes("profile") || window.location.pathname.includes("notifications")
+  ,
+  //eslint-disable-next-line
+  [window.location.pathname])
+
 return (
     <AppBar position='static'>
-      <Toolbar>
-        <Hidden only={["md","lg","xl"]}>
-          <IconButton color='inherit' onClick={toggleDrawer}>
-            <Plus />
+      <Toolbar className="themedToolbar flex justify-between">
+        <div className='flex items-center'>
+            {!notHomePage &&
+              <Hidden only={["md","lg","xl"]}>
+              <IconButton color='inherit' onClick={toggleDrawer}>
+                <Plus />
+              </IconButton>
+            </Hidden>
+            }
+          <Typography variant="h5" component="h5" color="inherit" className='font-bold'>
+            Bowling Stats
+          </Typography>
+        </div>
+        <div className='flex items-center'>
+          <Link to={`${url}/profile`}>
+            <IconButton title="Profile" className="iconButton float-right">
+              <User />
+            </IconButton>
+          </Link>
+          <Link to={`${url}`}>
+            <IconButton title="Home" className="iconButton float-right">
+              <Home />
+            </IconButton>
+          </Link>
+          <Link to={`${url}/notifications`}>
+            <IconButton title="Notifications" color="inherit" >
+              <Bell />
+            </IconButton>
+          </Link>
+          <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
+          <Link to={`${url}/u/google-oauth2%7C103191263421551305631`}>
+            <IconButton title="Logout" color="inherit" className="auth-button" >
+              <LogOut />
+            </IconButton>
+          </Link>
+          <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout({ returnTo: window.location.origin })} >
+            <LogOut />
           </IconButton>
-        </Hidden>
-        <Typography variant="h6" color="inherit">
-          Bowling Stats
-        </Typography>
-        <Link to={`${url}/profile`}>
-          <IconButton title="Profile" color="inherit">
-            <User />
-          </IconButton>
-        </Link>
-        <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
-        <IconButton title="Logout" color="inherit" className="auth-button" onClick={logout} >
-          <LogOut />
-        </IconButton>
+        </div>
       </Toolbar>
     </AppBar>
   );

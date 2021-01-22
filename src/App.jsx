@@ -7,7 +7,7 @@ import ApplicationRouter from './ApplicationRouter'
 
 const App = () => {
   const [theme, themeToggler] = useDarkMode();
-  const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  const themeMode = theme === 'dark' ? lightTheme : darkTheme;
 
   return (
     <ThemeProvider theme={themeMode}>

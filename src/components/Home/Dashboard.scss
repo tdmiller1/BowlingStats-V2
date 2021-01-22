@@ -1,0 +1,75 @@
+.GameChart{
+  width: calc(100vw - 300px);
+  padding: 10px calc(25% - 70px);
+  @media only screen and (max-width: 600px) {
+    width:85vw;
+    padding: 10px 5%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100vw;
+    padding: 10px calc(25% - 70px);
+  }
+  @media only screen and (min-width: 960px) {
+    width: calc(100vw - 300px);
+    padding: 10px calc(25% - 70px);
+  }
+  @media only screen and (min-width: 1300px) {
+    width: calc(100vw - 400px);
+    padding: 10px calc(25% - 70px);
+  }
+
+  &-GridParent{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  &-Grid{
+    min-height: calc(50vh - 68px);
+
+    @media only screen and (max-width: 600px) {
+      min-height: calc(40vh - 68px);
+      max-height: calc(40vh - 68px);
+    }
+    @media only screen and (max-width: 960px) {
+      min-height: calc(50vh - 68px);
+      max-height: calc(50vh - 68px);
+    }
+    @media only screen and (max-width: 1200px) {
+      min-height: calc(37vh - 68px);
+      max-height: calc(37vh - 68px);
+    }
+    @media only screen and (max-width: 1920px) {
+      min-height: calc(52vh - 68px);
+      max-height: calc(52vh - 68px);
+    }
+  }
+}
+
+.GameTable{
+  overflow-y: auto;
+  min-height: 50vh;
+
+  @media only screen and (max-width: 600px) {
+    min-height: 60vh;
+    max-height: 60vh;
+  }
+  @media only screen and (max-width: 960px) {
+    min-height: 50vh;
+    max-height: 50vh;
+  }
+  @media only screen and (max-width: 1200px) {
+    min-height: 63vh;
+    max-height: 63vh;
+  }
+  @media only screen and (max-width: 1920px) {
+    min-height: 48vh;
+    max-height: 48vh;
+  }
+
+  &-Header{
+    font-size: 14px;
+  }
+}
+
+.MuiTableCell-root{padding:0 !important}
