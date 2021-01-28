@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { getPublicPlayerData } from '../../utils/gameApi';
+import { getPublicPlayerData, sendFriendRequest } from '../../utils/gameApi';
 
 const PublicProfile = () => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [playerData, setPlayerData] = useState({});
   const urlPathName = window.location.pathname;
   const playerUID = urlPathName.split('/u/').pop();
@@ -21,9 +21,12 @@ const PublicProfile = () => {
 
   const error = useMemo(() => {return !!playerData.message},[playerData])
 
+  const decodePlayerUID = decodeURIComponent(playerUID.replace(/\+/g, " "));
+
   const handleAddFriend = () => {
     getAccessTokenSilently().then((token) => {
       // Send friend request
+      sendFriendRequest(user.sub, decodePlayerUID, {}, token).then(() => {});
     });
   }
 
