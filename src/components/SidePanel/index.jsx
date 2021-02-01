@@ -23,7 +23,6 @@ const SidePanel = ({theme, addGameCallback}) => {
 
   const resetGameInfo = () => {
     setGameScore(null);
-    setSelectedDay(null);
     setErrorMessage(null);
     addGameCallback();
   }
