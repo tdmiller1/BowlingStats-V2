@@ -48,11 +48,6 @@ return (
             </IconButton>
           </Link>
           <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
-          <Link to={`${url}/u/google-oauth2%7C103191263421551305631`}>
-            <IconButton title="Logout" color="inherit" className="auth-button" >
-              <LogOut />
-            </IconButton>
-          </Link>
           <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout({ returnTo: window.location.origin })} >
             <LogOut />
           </IconButton>
