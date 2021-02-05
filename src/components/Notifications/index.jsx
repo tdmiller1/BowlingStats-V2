@@ -10,7 +10,6 @@ const Notifications = ({ profile, refreshCallback }) => {
   return (
     <div className='flex flex-col lg:flex-row m-3 md:m-4 justify-evenly'>
       <Grid container className="GameChart-ParentGrid">
-        {console.log(_.isEmpty(notifications))}
         {!_.isEmpty(notifications)  && <NotificationsTable notifications={notifications} refreshCallback={refreshCallback} />}
         {_.isEmpty(notifications) && <div>No Notifications</div>}
       </Grid>

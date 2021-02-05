@@ -17,7 +17,6 @@ const Callback = () => {
     if (!isLoading && isAuthenticated) {
       var url = new URL(window.location.href);
       var c = url.searchParams.get("code");
-      console.log(c)
       loginPlayer();
     }
   }, [isLoading, isAuthenticated, loginPlayer]);
