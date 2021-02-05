@@ -15,6 +15,8 @@ const Podium = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if(!playerData) return null;
+
   return (
     <div className='flex justify-center pt-4 mt-4'>
       <div className='flex items-end'>
