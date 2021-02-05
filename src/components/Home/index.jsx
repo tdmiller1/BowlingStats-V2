@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { Hidden, Drawer } from '@material-ui/core';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
 import Profile from '../Profile/index';
 import Header from '../Header';
@@ -78,4 +78,6 @@ const Home = (props) => {
   )
 }
 
-export default Home;
+export default withAuthenticationRequired(Home, {
+  onRedirecting: () => <div>Loading</div>,
+});

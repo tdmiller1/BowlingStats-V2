@@ -7,16 +7,26 @@ import {
 } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
 
-import Login from './components/Login/index'
+import LandingPage from './components/LandingPage'
 import Home from './components/Home/index';
 import Callback from './components/Callback';
+import My404Component from './components/My404Component';
+
+import { loginUser } from './utils/gameApi';
 
 const ApplicationRouter = (props) => {
-  const { isLoading, isAuthenticated, error } = useAuth0();
-  console.log(isLoading)
+  const { isLoading, isAuthenticated, error, getAccessTokenSilently, user } = useAuth0();
+
+  function loginPlayer(){
+    getAccessTokenSilently().then((token) => {
+      loginUser(user.sub, user.email, user.name, token)
+    });
+  }
 
   if (isLoading) return <div>loading</div>
   if (error) return <div>{error.message}</div>
+
+  if(user) loginPlayer();
 
   return (
     <Router>
@@ -24,17 +34,27 @@ const ApplicationRouter = (props) => {
         <Route exact path="/">
           <Redirect
             to={{
-              pathname: "/home",
+              pathname: "/login",
             }}
           />
         </Route>
         <Route path="/home">
-          {isAuthenticated && <Home {...props} />}
-          {!isAuthenticated && <Login />}
+          <Home {...props} />
         </Route>
         <Route path="/callback">
           <Callback />
         </Route>
+        <Route path="/login">
+          {!isAuthenticated && <LandingPage />}
+          {isAuthenticated &&
+            <Redirect
+              to={{
+                pathname: "/home",
+              }}
+            />
+          }
+        </Route>
+        <Route path='*' exact={true} component={My404Component} />
       </Switch>
     </Router>
   )
