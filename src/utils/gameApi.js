@@ -139,3 +139,18 @@ export async function sendFriendRequest(authId, friendAuthId, data, token){
   if(!response) return {error: "Error, please refresh and try again", response: null}
   return {error: null, response: response};
 }
+
+export async function updatePlayerInfo(authId, playerData, token){
+  const response = await axios.put(`${Host.url}/players/update`,
+  {
+    authId: authId,
+    ...playerData,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch(err => console.error(err));
+  if(!response) return {error: "Error, please refresh and try again", response: null}
+  return {error: null, response: response};
+}

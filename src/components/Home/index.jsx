@@ -61,7 +61,7 @@ const Home = (props) => {
           </div>
         </Route>
         <Route path={`${path}/profile`}>
-          <Profile profile={profile} {...props} />
+          <Profile profile={profile} {...props} refreshCallback={refreshData} />
         </Route>
         {profile && (
           <>

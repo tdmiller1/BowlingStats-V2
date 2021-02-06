@@ -7,14 +7,14 @@ import UploadHistory from './UploadHistory';
 import Leaderboard from './Leaderboard';
 import "./Profile.scss";
 
-const Profile = () => {
+const Profile = ({ profile, refreshCallback }) => {
   const { user } = useAuth0();
 
   return (
     <div className='flex flex-col lg:flex-row m-3 md:m-4 justify-evenly'>
       <div className="Profile-Section text-center items-center p-3 lg:p-4 lg:m-2 xl:m-4 xl:p-6 w-full">
         <ShareLink authId={user.sub} />
-        <PersonalInfo />
+        <PersonalInfo profile={profile} refreshCallback={refreshCallback} />
         <Podium />
         <UploadHistory />
       </div>
