@@ -11,6 +11,7 @@ const PersonalInfo = ({ profile, refreshCallback }) => {
   const [editPlayername, setEditPlayername] = useState();
   const [editLocation, setEditLocation] = useState();
   const [isDirty, setIsDirty] = useState(false);
+  const [message] = useState(profile?.message)
 
   const EditButton = () => {
     if(isDirty) {
@@ -33,6 +34,7 @@ const PersonalInfo = ({ profile, refreshCallback }) => {
   }
 
   useEffect(() => {
+    if(profile?.message) setIsEditing(true);
     setEditPlayername(profile?.playerName);
     setEditLocation(profile?.location);
   }, [profile]);
@@ -49,7 +51,17 @@ const PersonalInfo = ({ profile, refreshCallback }) => {
         <img className='Profile-Picture' alt="avatar" src={user.picture} />
       </div>
       <div className='flex w-full text-center justify-evenly flex-row'>
-        {!isEditing &&
+        {!isEditing && message && (
+          <>
+            <div>No Data</div>
+            <span>
+              <IconButton onClick={() => setIsEditing(true)} title="Edit" className="iconButton float-right">
+                <Edit />
+              </IconButton>
+            </span>
+          </>
+        )}
+        {!isEditing && !message &&
           <>
             <div className='flex w-full text-center justify-evenly flex-col'>
               <Typography variant="subtitle1" color="inherit" className='font-bold'>

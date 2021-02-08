@@ -16,7 +16,7 @@ const Profile = ({ profile, refreshCallback }) => {
         <ShareLink authId={user.sub} />
         <PersonalInfo profile={profile} refreshCallback={refreshCallback} />
         <Podium />
-        <UploadHistory />
+        <UploadHistory profile={profile} />
       </div>
       <div className="flex flex-col justify-center text-center items-center p-3 lg:p-4 lg:m-2 xl:m-4 xl:p-6 w-full">
         <Leaderboard />
