@@ -58,6 +58,14 @@ const Leaderboard = ({ profile }) => {
     }
   ]
 
+  const defaultFriendData = [
+    {
+      username: 'Add a friend to compare',
+      maxScore: 300,
+      average: 300
+    }
+  ]
+
   return (
     <>
       <BottomNavigation value={value} onChange={handleChange}>
@@ -65,6 +73,7 @@ const Leaderboard = ({ profile }) => {
         <BottomNavigationAction label="Global" value={LEADERBOARD.GLOBAL} icon={<Globe />} />
       </BottomNavigation>
       {value === LEADERBOARD.FRIENDS && friendData.length > 0 && <LeaderboardTable users={friendData} />}
+      {value === LEADERBOARD.FRIENDS && friendData.length === 0 && <LeaderboardTable users={defaultFriendData} />}
       {value === LEADERBOARD.GLOBAL && <LeaderboardTable users={globalUsers} />}
     </>
   );
