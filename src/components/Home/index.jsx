@@ -14,6 +14,7 @@ import Dashboard from './Dashboard';
 import { getUserInfo } from '../../utils/gameApi';
 import Notifications from '../Notifications/index';
 import PublicProfile from '../PublicProfile/index';
+import ReportBug from '../ReportBug';
 
 const Home = (props) => {
   const { theme } = props;
@@ -70,6 +71,9 @@ const Home = (props) => {
             </Route>
             <Route path={`${path}/u/`}>
               <PublicProfile />
+            </Route>
+            <Route path={`${path}/bug`}>
+              <ReportBug />
             </Route>
           </>
           )}
