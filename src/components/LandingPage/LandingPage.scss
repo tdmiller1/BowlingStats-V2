@@ -5,10 +5,23 @@
     padding: 0 50px;
     margin: 0px;
     width: 100%;
+
+    @media only screen and (max-width: 600px) {
+      padding: 15px;
+    }
   }
   &-header {
     padding: 20px;
     margin: 20px;
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width: 600px) {
+      padding: 0px;
+      margin: 0px 0px 30px 0px;
+    }
+    &-buttons{
+      text-align: right;
+    }
   }
   &-logo {
     float:left;
@@ -20,7 +33,6 @@
     }
   }
   &-logoText {
-    padding-top: 25px;
     float: right;
   }
   &-login {
@@ -62,5 +74,6 @@
   }
   &-icon {
     padding: 10px;
+    width: 75px;
   }
 }
