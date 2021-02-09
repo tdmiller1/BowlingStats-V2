@@ -66,8 +66,19 @@ function TablePaginationActions(props) {
   );
 }
 
+function compare( a, b ) {
+  if ( a.maxScore < b.maxScore ){
+    return 1;
+  }
+  if ( a.maxScore > b.maxScore ){
+    return -1;
+  }
+  return 0;
+}
+
 const LeaderboardTable = ({ users }) => {
-  const renderTableRows = (user) => <LeaderboardTableRow key={user.rank} {...user} />
+  users.sort(compare);
+  const renderTableRows = (user, index) => <LeaderboardTableRow key={index} {...user} />
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);

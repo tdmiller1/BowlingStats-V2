@@ -35,3 +35,11 @@
     max-height: 52px;
   }
 }
+
+.Leaderboard {
+  &-Table {
+    &-Row {
+      min-width: 200px;
+    }
+  }
+}

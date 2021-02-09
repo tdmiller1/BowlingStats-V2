@@ -4,7 +4,7 @@ const UploadHistory = ({ profile }) => {
   if(!profile) return null;
 
   const loginDate = new Date(profile?.initialLogin);
-  console.log(loginDate)
+
   return (
     <div className='flex flex-row pt-4 mt-4 mb-4 pb-4'>
       <div className='flex w-full text-center justify-evenly flex-col'>
