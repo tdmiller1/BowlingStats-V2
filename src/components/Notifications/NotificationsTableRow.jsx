@@ -3,7 +3,7 @@ import { Check, X } from 'react-feather';
 import {Typography, TableCell, TableRow, IconButton} from '@material-ui/core'
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { getPlayerName, acceptFriendRequest, removeNotification } from '../../utils/gameApi';
+import { getPlayerName, acceptFriendRequest, removeNotification, removeFriend } from '../../utils/gameApi';
 
 const NotificationsTableRow = ({sender, receiver, type, data, refreshData}) => {
   const [playerName, setPlayerName] = useState(null);
@@ -18,18 +18,23 @@ const NotificationsTableRow = ({sender, receiver, type, data, refreshData}) => {
   const handleAccept = () => {
     getAccessTokenSilently().then((token) => {
       acceptFriendRequest(receiver, sender, token).then(() => {
-          acceptFriendRequest(sender, receiver, token).then(() => {
-            removeNotification(receiver, sender, data, token).then(() =>{
-              refreshData();
-            })
-          });
+        acceptFriendRequest(sender, receiver, token).then(() => {
+          removeNotification(receiver, sender, data, token).then(() =>{
+            refreshData();
+          })
+        });
       })
     });
-
   };
 
   const handleDeny = () => {
-    // deleteGame(_id).then(() => deleteGameCallback() )
+    getAccessTokenSilently().then((token) => {
+      removeFriend(receiver, sender, token).then(() => {
+        removeNotification(receiver, sender, data, token).then(() =>{
+          refreshData();
+        })
+      })
+    });
   };
 
   return (

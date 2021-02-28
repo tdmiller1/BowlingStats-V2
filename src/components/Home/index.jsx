@@ -67,10 +67,10 @@ const Home = (props) => {
         {profile && (
           <>
             <Route path={`${path}/notifications`}>
-              <Notifications profile={profile} refreshCallback={refreshData} {...props} />
+              <Notifications refreshCallback={refreshData} profile={profile} setProfile={setProfile} {...props} />
             </Route>
             <Route path={`${path}/u/`}>
-              <PublicProfile />
+              <PublicProfile refreshCallback={refreshData} />
             </Route>
             <Route path={`${path}/bug`}>
               <ReportBug />

@@ -8,7 +8,7 @@ const Podium = () => {
 
   useEffect(() => {
     getAccessTokenSilently().then((token) => {
-      getPublicPlayerData(user.sub, token).then(result => {
+      getPublicPlayerData(user.sub, user.sub, token).then(result => {
         setPlayerData(result.response?.data)
       })
     });

@@ -92,14 +92,23 @@ export async function acceptFriendRequest(authId, friendAuthId, token){
   return {error: null, response: response};
 }
 
-export async function denyFriendRequest(authId, token){
-  const response = await axios.put(`${Host.url}/players/?authId=${authId}`).catch(err => console.error(err));
+export async function removeFriend(authId, friendAuthId, token){
+  const response = await axios.put(`${Host.url}/players/remove/friend`,
+  {
+    authId,
+    friendAuthId
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }).catch(err => console.error(err));
   if(!response) return {error: "Error, please refresh and try again", response: null}
   return {error: null, response: response};
 }
 
 export async function removeNotification(authId, friendAuthId, data, token){
-  const response = await axios.put(`${Host.url}/notifications/acceptRequest`,
+  const response = await axios.put(`${Host.url}/notifications/removeNotification`,
   {
     authId: authId,
     friendAuthId: friendAuthId,
@@ -114,8 +123,8 @@ export async function removeNotification(authId, friendAuthId, data, token){
   return {error: null, response: response};
 }
 
-export async function getPublicPlayerData(authId, token){
-  const response = await axios.get(`${Host.url}/players/find/publicData?authId=${authId}`, {
+export async function getPublicPlayerData(authId, friendAuthId, token){
+  const response = await axios.get(`${Host.url}/players/find/publicData?authId=${authId}&friendAuthId=${friendAuthId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
