@@ -9,7 +9,7 @@ import ApplicationRouter from './ApplicationRouter'
 const App = () => {
   const { isLoading, error } = useAuth0();
   const [theme, themeToggler] = useDarkMode();
-  const themeMode = theme === 'dark' ? lightTheme : darkTheme;
+  const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if (isLoading) return <div>loading</div>
   if (error) return <div>{error.message}</div>
 

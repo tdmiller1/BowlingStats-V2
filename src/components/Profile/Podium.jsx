@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getPublicPlayerData } from '../../utils/gameApi';
+import { Typography } from '@material-ui/core';
 
 const Podium = () => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -20,9 +21,27 @@ const Podium = () => {
   return (
     <div className='flex justify-center pt-4 mt-4'>
       <div className='flex items-end'>
-        <div className='Profile-second'><div className="Profile-PodiumResult">{playerData.average}</div></div>
-        <div className='Profile-first'><div className="Profile-PodiumResult">{playerData.highScore}</div></div>
-        <div className='Profile-third'><div className="Profile-PodiumResult">{playerData.lowScore}</div></div>
+        <div className='Profile-second'>
+          <div className="Profile-PodiumResult">
+          <Typography variant="subtitle1" color="inherit" className='font-bold'>
+            {playerData.average}
+          </Typography>
+        </div>
+        </div>
+        <div className='Profile-first'>
+          <div className="Profile-PodiumResult">
+            <Typography variant="subtitle1" color="inherit" className='font-bold'>
+              {playerData.highScore}
+            </Typography>
+          </div>
+        </div>
+        <div className='Profile-third'>
+          <div className="Profile-PodiumResult">
+            <Typography variant="subtitle1" color="inherit" className='font-bold'>
+              {playerData.lowScore}
+            </Typography>
+          </div>
+        </div>
       </div>
     </div>
   );

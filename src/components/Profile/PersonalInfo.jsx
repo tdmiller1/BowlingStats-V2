@@ -73,7 +73,7 @@ const PersonalInfo = ({ profile, refreshCallback }) => {
             </div>
             <span>
               <IconButton onClick={() => setIsEditing(true)} title="Edit" className="iconButton float-right">
-                <Edit />
+                <Edit className="light-mode-darker" />
               </IconButton>
             </span>
           </>

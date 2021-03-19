@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import NotificationsTable from './NotificationsTable';
 
 import { getUserInfo } from '../../utils/gameApi';
@@ -28,7 +28,8 @@ const Notifications = ({refreshCallback, profile, setProfile}) => {
     <div className='flex flex-col lg:flex-row m-3 md:m-4 justify-evenly'>
       <Grid container className="GameChart-ParentGrid">
         {!_.isEmpty(profile?.notifications)  && <NotificationsTable notifications={profile?.notifications} refreshCallback={refreshCallback} />}
-        {_.isEmpty(profile?.notifications) && <div>No Notifications</div>}
+        {_.isEmpty(profile?.notifications) &&
+          <Typography variant="subtitle1" color="inherit" className='font-bold'>No Notifications</Typography>}
       </Grid>
     </div>
   )

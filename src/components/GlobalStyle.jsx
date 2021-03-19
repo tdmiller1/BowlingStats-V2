@@ -48,5 +48,8 @@ export const GlobalStyle = createGlobalStyle`
     .MuiOutlinedInput-notchedOutline { border-color: ${({ theme }) => theme.headerBackgroundColor} !important; };
     .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {border-color: ${({ theme }) => theme.headerBackgroundColor} !important; };
     .MuiInputLabel-outlined { color: ${({ theme }) => theme.headerBackgroundColor} !important; };
+    .MuiTypography-subtitle1 { color: ${({ theme }) => theme.headerFontColor} !important; };
+    .MuiButtonBase-root, .light-mode-darker { color: ${({ theme }) => theme.headerFontColor} };
+    .MuiTypography-h4 { color: ${({ theme }) => theme.headerFontColor} !important; };
   }
   `
