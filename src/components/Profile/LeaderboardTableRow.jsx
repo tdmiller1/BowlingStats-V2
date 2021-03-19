@@ -4,7 +4,7 @@ import { TableRow, TableCell, Typography } from '@material-ui/core';
 const LeaderboardTableRow = ({ username, average, maxScore, rank }) => {
   return (
     <TableRow key={rank}>
-      <TableCell align="center">
+      <TableCell className="Leaderboard-Table-Row" align="center">
         <Typography variant="body1" gutterBottom>
           {username}
         </Typography>

@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { Hidden, Drawer } from '@material-ui/core';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
 import Profile from '../Profile/index';
 import Header from '../Header';
@@ -14,6 +14,7 @@ import Dashboard from './Dashboard';
 import { getUserInfo } from '../../utils/gameApi';
 import Notifications from '../Notifications/index';
 import PublicProfile from '../PublicProfile/index';
+import ReportBug from '../ReportBug';
 
 const Home = (props) => {
   const { theme } = props;
@@ -61,15 +62,18 @@ const Home = (props) => {
           </div>
         </Route>
         <Route path={`${path}/profile`}>
-          <Profile profile={profile} {...props} />
+          <Profile profile={profile} {...props} refreshCallback={refreshData} />
         </Route>
         {profile && (
           <>
             <Route path={`${path}/notifications`}>
-              <Notifications profile={profile} refreshCallback={refreshData} {...props} />
+              <Notifications refreshCallback={refreshData} profile={profile} setProfile={setProfile} {...props} />
             </Route>
             <Route path={`${path}/u/`}>
-              <PublicProfile />
+              <PublicProfile refreshCallback={refreshData} />
+            </Route>
+            <Route path={`${path}/bug`}>
+              <ReportBug />
             </Route>
           </>
           )}
@@ -78,4 +82,6 @@ const Home = (props) => {
   )
 }
 
-export default Home;
+export default withAuthenticationRequired(Home, {
+  onRedirecting: () => <div>Loading</div>,
+});

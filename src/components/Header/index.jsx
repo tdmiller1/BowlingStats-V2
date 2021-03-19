@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link, useRouteMatch } from "react-router-dom";
-import { Home, Plus, LogOut, User, Bell } from 'react-feather';
+import { Home, Plus, LogOut, User, Bell, Flag } from 'react-feather';
 import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/core';
 import DarkModeToggle from '../DarkModeToggle';
 import './Header.scss';
@@ -32,14 +32,19 @@ return (
           </Typography>
         </div>
         <div className='flex items-center'>
-          <Link to={`${url}/profile`}>
-            <IconButton title="Profile" className="iconButton float-right">
-              <User />
+          <Link to={`${url}/bug`}>
+            <IconButton title="Bug" className="iconButton float-right">
+              <Flag />
             </IconButton>
           </Link>
           <Link to={`${url}`}>
             <IconButton title="Home" className="iconButton float-right">
               <Home />
+            </IconButton>
+          </Link>
+          <Link to={`${url}/profile`}>
+            <IconButton title="Profile" className="iconButton float-right">
+              <User />
             </IconButton>
           </Link>
           <Link to={`${url}/notifications`}>
@@ -48,11 +53,6 @@ return (
             </IconButton>
           </Link>
           <DarkModeToggle theme={theme} toggleTheme={toggleTheme} />
-          <Link to={`${url}/u/google-oauth2%7C103191263421551305631`}>
-            <IconButton title="Logout" color="inherit" className="auth-button" >
-              <LogOut />
-            </IconButton>
-          </Link>
           <IconButton title="Logout" color="inherit" className="auth-button" onClick={() => logout({ returnTo: window.location.origin })} >
             <LogOut />
           </IconButton>

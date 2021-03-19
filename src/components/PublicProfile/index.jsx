@@ -2,28 +2,41 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { getPublicPlayerData } from '../../utils/gameApi';
+import { getPublicPlayerData, sendFriendRequest, removeFriend } from '../../utils/gameApi';
 
-const PublicProfile = () => {
-  const { getAccessTokenSilently } = useAuth0();
+const PublicProfile = ({ refreshCallback }) => {
+  const { getAccessTokenSilently, user } = useAuth0();
   const [playerData, setPlayerData] = useState({});
   const urlPathName = window.location.pathname;
   const playerUID = urlPathName.split('/u/').pop();
 
-  useEffect(() => {
+  function refreshPlayerData(){
+    refreshCallback();
     getAccessTokenSilently().then((token) => {
-      getPublicPlayerData(playerUID, token).then(result => {
+      getPublicPlayerData(user.sub, playerUID, token).then(result => {
         setPlayerData(result.response?.data)
       })
     });
+  }
+
+  useEffect(() => {
+    refreshPlayerData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const error = useMemo(() => {return !!playerData.message},[playerData])
+  const error = useMemo(() => {return !!playerData?.message}, [ playerData ])
+
+  const decodePlayerUID = decodeURIComponent(playerUID.replace(/\+/g, " "));
 
   const handleAddFriend = () => {
     getAccessTokenSilently().then((token) => {
-      // Send friend request
+      sendFriendRequest(user.sub, decodePlayerUID, {}, token).then(() => refreshPlayerData());
+    });
+  }
+
+  const handleRemoveFriend = () => {
+    getAccessTokenSilently().then((token) => {
+      removeFriend(user.sub, decodePlayerUID, token).then(() => refreshPlayerData())
     });
   }
 
@@ -47,7 +60,9 @@ const PublicProfile = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={handleAddFriend}>Add Friend</Button>
+          {playerData.isSelf && <div>Yourself</div>}
+          {playerData.isFriend && <Button size="small" onClick={handleRemoveFriend}>Remove Friend</Button>}
+          {!playerData.isFriend && !playerData.isSelf && <Button size="small" onClick={handleAddFriend}>Add Friend</Button>}
         </CardActions>
       </Card>
     )}

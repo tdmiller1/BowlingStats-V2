@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
-import { Grid } from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Grid, Typography } from '@material-ui/core';
 import NotificationsTable from './NotificationsTable';
 
-const Notifications = ({ profile, refreshCallback }) => {
+import { getUserInfo } from '../../utils/gameApi';
 
-  const { notifications } = profile;
+const Notifications = ({refreshCallback, profile, setProfile}) => {
+  const { user, getAccessTokenSilently } = useAuth0();
+
+  const refreshData = () => {
+    getAccessTokenSilently().then((token) => {
+      getUserInfo(user.sub, token).then(e => {
+        if(e.response?.data) {
+          setProfile(e.response.data);
+        }
+      })
+    });
+  };
+
+  useEffect(() => {
+    refreshData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className='flex flex-col lg:flex-row m-3 md:m-4 justify-evenly'>
       <Grid container className="GameChart-ParentGrid">
-        {console.log(_.isEmpty(notifications))}
-        {!_.isEmpty(notifications)  && <NotificationsTable notifications={notifications} refreshCallback={refreshCallback} />}
-        {_.isEmpty(notifications) && <div>No Notifications</div>}
+        {!_.isEmpty(profile?.notifications)  && <NotificationsTable notifications={profile?.notifications} refreshCallback={refreshCallback} />}
+        {_.isEmpty(profile?.notifications) &&
+          <Typography variant="subtitle1" color="inherit" className='font-bold'>No Notifications</Typography>}
       </Grid>
     </div>
   )

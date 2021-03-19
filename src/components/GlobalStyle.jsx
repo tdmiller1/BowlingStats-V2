@@ -41,5 +41,15 @@ export const GlobalStyle = createGlobalStyle`
     .LandingPage-login { color: ${({ theme }) => theme.sidePanelColor} !important; };
     .LandingPage-paragraph { color: ${({ theme }) => theme.sidePanelColor}};
     .LandingPage-link { color: ${({ theme }) => theme.sidePanelColor} !important; };
+    .MuiInputBase-input { border-color: ${({ theme }) => theme.body} !important; };
+    .Mui-focused { color: ${({ theme }) => theme.headerBackgroundColor} !important };
+    .MuiInputBase-root { color: ${({ theme }) => theme.headerBackgroundColor} !important; };
+    .MuiOutlinedInput-input { border-color: ${({ theme }) => theme.headerBackgroundColor} };
+    .MuiOutlinedInput-notchedOutline { border-color: ${({ theme }) => theme.headerBackgroundColor} !important; };
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {border-color: ${({ theme }) => theme.headerBackgroundColor} !important; };
+    .MuiInputLabel-outlined { color: ${({ theme }) => theme.headerBackgroundColor} !important; };
+    .MuiTypography-subtitle1 { color: ${({ theme }) => theme.headerFontColor} !important; };
+    .MuiButtonBase-root, .light-mode-darker { color: ${({ theme }) => theme.headerFontColor} };
+    .MuiTypography-h4 { color: ${({ theme }) => theme.headerFontColor} !important; };
   }
   `
