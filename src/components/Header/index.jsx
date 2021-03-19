@@ -5,10 +5,12 @@ import { Home, Plus, LogOut, User, Bell, Flag } from 'react-feather';
 import { AppBar, Toolbar, Typography, IconButton, Hidden } from '@material-ui/core';
 import DarkModeToggle from '../DarkModeToggle';
 import './Header.scss';
+import { useWindowSize } from '../../utils/useWindowSize'
 
 const Header = ({ theme, toggleTheme, toggleDrawer }) => {
   const { logout } = useAuth0();
   let { url } = useRouteMatch();
+  const size = useWindowSize();
 
   const notHomePage = useMemo(() =>
     window.location.pathname.includes("profile") || window.location.pathname.includes("notifications")
@@ -27,9 +29,11 @@ return (
               </IconButton>
             </Hidden>
             }
-          <Typography variant="h5" component="h5" color="inherit" className='font-bold'>
-            Bowling Stats
-          </Typography>
+          {size.width > 960 &&
+            <Typography variant="h5" component="h5" color="inherit" className='font-bold'>
+              Bowling Stats
+            </Typography>
+          }
         </div>
         <div className='flex items-center'>
           <Link to={`${url}/bug`}>
