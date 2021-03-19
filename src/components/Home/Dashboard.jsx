@@ -4,10 +4,12 @@ import { Chart } from 'primereact/chart';
 import { Grid } from '@material-ui/core';
 import './Dashboard.scss';
 import GameTable from './GameTable';
+import { useWindowSize } from '../../utils/useWindowSize'
 
 const Dashboard = (props) => {
   const {games = [], refreshCallback} = props;
   const [gameData, setGameData] = useState({});
+  const size = useWindowSize();
 
   function compare(a,b){
     return moment.utc(a.date).diff(moment.utc(b.date))
@@ -90,9 +92,12 @@ const Dashboard = (props) => {
   return (
     <div className="w-full p-0">
       <Grid container className="GameChart-ParentGrid">
-        <Grid container className="GameChart-Grid" direction='row'>
-          <Chart className="GameChart" type="line" data={gameData} />
-        </Grid>
+        {size.width > 960 &&
+        (
+          <Grid container className="GameChart-Grid" direction='row'>
+            <Chart className="GameChart" type="line" data={gameData} />
+          </Grid>
+        )}
         <GameTable {...props} games={games} refreshCallback={refreshCallback} />
       </Grid>
     </div>
