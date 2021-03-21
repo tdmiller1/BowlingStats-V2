@@ -23,26 +23,35 @@ const GameTable = ({ games, refreshCallback }) => {
 
   return (
     <Grid alignItems="stretch" justify="center" className="GameTable" direction='row' container >
-      <Table stickyHeader >
-        <TableHead>
-            <TableRow>
-              <TableCell className="GameTable-Header" align="center">
-                <Typography variant="h6" gutterBottom>
-                  Score
-                </Typography>
-              </TableCell>
-              <TableCell className="GameTable-Header" align="center">
-                <Typography variant="h6" gutterBottom>
-                  Date
-                </Typography>
-              </TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-          {games?.map(renderGames)}
-        </TableBody>
-      </Table>
+      {games?.length === 0 &&
+        <div className="text-center m-2">
+          <span className="m-4">
+            <Typography variant="h5" component="h5" color="inherit" className='font-bold'>Oops you don't have any games logged</Typography>
+          </span>
+          <Typography variant="h5" component="h5" color="inherit" className='font-bold'>Click the + in the corner to begin</Typography>
+        </div>}
+      {games?.length !== 0 &&
+        <Table stickyHeader >
+          <TableHead>
+              <TableRow>
+                <TableCell className="GameTable-Header" align="center">
+                  <Typography variant="h6" gutterBottom>
+                    Score
+                  </Typography>
+                </TableCell>
+                <TableCell className="GameTable-Header" align="center">
+                  <Typography variant="h6" gutterBottom>
+                    Date
+                  </Typography>
+                </TableCell>
+                <TableCell align="center"></TableCell>
+              </TableRow>
+          </TableHead>
+          <TableBody>
+            {games?.map(renderGames)}
+          </TableBody>
+        </Table>
+      }
     </Grid>
   )
 }
