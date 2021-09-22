@@ -1,8 +1,8 @@
-.GameChart{
+.GameChart {
   width: calc(100vw - 300px);
   padding: 10px calc(25% - 70px);
   @media only screen and (max-width: 600px) {
-    width:85vw;
+    width: 85vw;
     padding: 10px 5%;
   }
   @media only screen and (min-width: 600px) {
@@ -12,19 +12,21 @@
   @media only screen and (min-width: 960px) {
     width: calc(100vw - 300px);
     padding: 10px calc(25% - 70px);
+    margin-bottom: 20px;
   }
   @media only screen and (min-width: 1300px) {
     width: calc(100vw - 400px);
-    padding: 10px calc(25% - 70px);
+    padding: 20px calc(25% - 70px);
+    margin-bottom: 20px;
   }
 
-  &-GridParent{
+  &-GridParent {
     margin: 0;
     padding: 0;
     width: 100%;
   }
 
-  &-Grid{
+  &-Grid {
     min-height: calc(50vh - 68px);
 
     @media only screen and (max-width: 600px) {
@@ -46,7 +48,7 @@
   }
 }
 
-.GameTable{
+.GameTable {
   overflow-y: auto;
   min-height: 50vh;
 
@@ -67,9 +69,11 @@
     max-height: 48vh;
   }
 
-  &-Header{
+  &-Header {
     font-size: 14px;
   }
 }
 
-.MuiTableCell-root{padding:0 !important}
+.MuiTableCell-root {
+  padding: 0 !important;
+}
