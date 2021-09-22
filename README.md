@@ -29,6 +29,6 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Learn More
 
-To view the project live, visit [https://bowling-stats-v2.herokuapp.com](https://bowling-stats-v2.herokuapp.com)
+To view the project live, visit [https://bowlingstats.app](https://bowlingstats.app)
 
 The app is hosted via Heroku.
