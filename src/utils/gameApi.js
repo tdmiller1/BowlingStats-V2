@@ -12,12 +12,16 @@ const httpClient = axios.create({
   baseURL: Host.url,
 });
 
+async function getToken() {
+  const token = await auth0.getTokenSilently();
+  localStorage.setItem("access_token", token);
+  return token;
+}
+
 httpClient.interceptors.request.use(async function (config) {
   const token = localStorage.getItem("access_token");
 
-  config.headers.Authorization = token
-    ? `Bearer ${token}`
-    : await auth0.getTokenSilently();
+  config.headers.Authorization = token ? `Bearer ${token}` : await getToken();
   return config;
 });
 
