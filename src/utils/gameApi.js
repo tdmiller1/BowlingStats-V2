@@ -4,8 +4,10 @@ import Host from "../config";
 import { Auth0Client } from "@auth0/auth0-spa-js";
 
 const auth0 = new Auth0Client({
-  domain: "tuckermillerdev.auth0.com",
-  client_id: "ATDCPehu9ptxeDmuNUEIgUxcnJoe9L9U",
+  domain: process.env.REACT_APP_AUTH0_DOMAIN,
+  client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+  useRefreshTokens: true,
 });
 
 const httpClient = axios.create({
@@ -21,7 +23,9 @@ async function getToken() {
 httpClient.interceptors.request.use(async function (config) {
   const token = localStorage.getItem("access_token");
 
-  config.headers.Authorization = token ? `Bearer ${token}` : await getToken();
+  config.headers.Authorization = token
+    ? `Bearer ${token}`
+    : `Bearer ${await getToken()}`;
   return config;
 });
 

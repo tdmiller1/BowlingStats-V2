@@ -18,7 +18,6 @@ const ApplicationRouter = (props) => {
   const { isLoading, isAuthenticated, error, user } = useAuth0();
 
   function loginPlayer() {
-    console.log(localStorage.getItem("access_token"));
     loginUser(user.sub, user.email, user.name);
   }
 

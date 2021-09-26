@@ -5,20 +5,11 @@ import { Redirect } from "react-router-dom";
 import { loginUser } from "../utils/gameApi";
 
 const Callback = () => {
-  const { isAuthenticated, user, getAccessTokenSilently, isLoading } =
-    useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
 
   const loginPlayer = useCallback(async () => {
     loginUser(user.sub, user.email, user.name);
-    try {
-      await getAccessTokenSilently({
-        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-        scope: "read:global-highscores",
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }, [getAccessTokenSilently, user]);
+  }, [user]);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {

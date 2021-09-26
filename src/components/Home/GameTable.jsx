@@ -24,7 +24,6 @@ const GameTable = ({ games, refreshCallback }) => {
       deleteGameCallback={deleteGameCallback}
     />
   );
-  console.log(size);
   return (
     <Grid
       alignItems="stretch"
