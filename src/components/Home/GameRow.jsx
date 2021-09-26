@@ -1,20 +1,18 @@
-import React from 'react';
-import { Trash2 } from 'react-feather';
-import moment from 'moment';
-import {Typography, TableCell, TableRow, IconButton} from '@material-ui/core'
-import { useAuth0 } from '@auth0/auth0-react';
+import React from "react";
+import { Trash2 } from "react-feather";
+import moment from "moment";
+import { Typography, TableCell, TableRow, IconButton } from "@material-ui/core";
+import { useAuth0 } from "@auth0/auth0-react";
 
-import { deleteGame } from '../../utils/gameApi';
+import { deleteGame } from "../../utils/gameApi";
 
-const GameRow = ({_id, score, date, deleteGameCallback}) => {
-  const { user, getAccessTokenSilently } = useAuth0();
+const GameRow = ({ _id, score, date, deleteGameCallback }) => {
+  const { user } = useAuth0();
 
   const handleDelete = () => {
-    getAccessTokenSilently().then((token) => {
-      deleteGame(user.sub, _id, token,).then(() => deleteGameCallback() )
-    });
+    deleteGame(user.sub, _id).then(() => deleteGameCallback());
   };
-  const parseDate = (date) => moment(date).format('MMMM DD, YYYY');
+  const parseDate = (date) => moment(date).format("MMMM DD, YYYY");
 
   return (
     <TableRow key={_id}>
@@ -29,12 +27,18 @@ const GameRow = ({_id, score, date, deleteGameCallback}) => {
         </Typography>
       </TableCell>
       <TableCell align="center">
-        <IconButton title="Delete" className="iconButton-trash" color="secondary" align="center" onClick={handleDelete}>
-            <Trash2 />
+        <IconButton
+          title="Delete"
+          className="iconButton-trash"
+          color="secondary"
+          align="center"
+          onClick={handleDelete}
+        >
+          <Trash2 />
         </IconButton>
-        </TableCell>
+      </TableCell>
     </TableRow>
-  )
-}
+  );
+};
 
 export default GameRow;

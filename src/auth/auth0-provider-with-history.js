@@ -19,7 +19,6 @@ const Auth0ProviderWithHistory = ({ children }) => {
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
       audience={process.env.REACT_APP_AUTH0_AUDIENCE}
-      scope="read:current_user update:current_user_metadata"
     >
       {children}
     </Auth0Provider>

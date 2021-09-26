@@ -11,7 +11,7 @@ const SidePanel = ({ theme, addGameCallback }) => {
   const [gameScore, setGameScore] = useState(null);
   const [selectedDay, setSelectedDay] = useState(new Date());
   const [errorMessage, setErrorMessage] = useState(null);
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user } = useAuth0();
 
   const handleDayClick = (day, { selected }) => {
     if (day < new Date()) {
@@ -31,10 +31,8 @@ const SidePanel = ({ theme, addGameCallback }) => {
     } else if (selectedDay === null || selectedDay === undefined) {
       setErrorMessage("Enter Date of Game");
     } else {
-      getAccessTokenSilently().then((token) => {
-        addGame(user.sub, gameScore, selectedDay, token).then((result) => {
-          result.error ? setErrorMessage(result.error) : resetGameInfo();
-        });
+      addGame(user.sub, gameScore, selectedDay).then((result) => {
+        result.error ? setErrorMessage(result.error) : resetGameInfo();
       });
     }
   };

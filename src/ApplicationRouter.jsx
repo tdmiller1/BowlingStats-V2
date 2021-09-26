@@ -1,32 +1,31 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
 
-import LandingPage from './components/LandingPage'
-import Home from './components/Home/index';
-import Callback from './components/Callback';
-import My404Component from './components/My404Component';
+import LandingPage from "./components/LandingPage";
+import Home from "./components/Home/index";
+import Callback from "./components/Callback";
+import My404Component from "./components/My404Component";
 
-import { loginUser } from './utils/gameApi';
+import { loginUser } from "./utils/gameApi";
 
 const ApplicationRouter = (props) => {
-  const { isLoading, isAuthenticated, error, getAccessTokenSilently, user } = useAuth0();
+  const { isLoading, isAuthenticated, error, user } = useAuth0();
 
-  function loginPlayer(){
-    getAccessTokenSilently().then((token) => {
-      loginUser(user.sub, user.email, user.name, token)
-    });
+  function loginPlayer() {
+    console.log(localStorage.getItem("access_token"));
+    loginUser(user.sub, user.email, user.name);
   }
 
-  if (isLoading) return <div>loading</div>
-  if (error) return <div>{error.message}</div>
+  if (isLoading) return <div>loading</div>;
+  if (error) return <div>{error.message}</div>;
 
-  if(user) loginPlayer();
+  if (user) loginPlayer();
 
   return (
     <Router>
@@ -46,18 +45,18 @@ const ApplicationRouter = (props) => {
         </Route>
         <Route path="/login">
           {!isAuthenticated && <LandingPage />}
-          {isAuthenticated &&
+          {isAuthenticated && (
             <Redirect
               to={{
                 pathname: "/home",
               }}
             />
-          }
+          )}
         </Route>
-        <Route path='*' exact={true} component={My404Component} />
+        <Route path="*" exact={true} component={My404Component} />
       </Switch>
     </Router>
-  )
-}
+  );
+};
 
 export default ApplicationRouter;

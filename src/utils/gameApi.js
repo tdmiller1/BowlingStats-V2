@@ -1,165 +1,227 @@
-import axios from 'axios';
-import Host from '../config';
+import axios from "axios";
+import Host from "../config";
 
-export async function addGame(authId, gameScore, selectedDay, token){
-  const response = await axios.put(`${Host.url}/games/add`,
-  {
-    authId: authId,
-    score: gameScore,
-    date: selectedDay
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
-}
+import { Auth0Client } from "@auth0/auth0-spa-js";
 
-export async function pullGames(authId, token){
-  const response = await axios.get(`${Host.url}/games/find?authId=${authId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
-}
+const auth0 = new Auth0Client({
+  domain: "tuckermillerdev.auth0.com",
+  client_id: "ATDCPehu9ptxeDmuNUEIgUxcnJoe9L9U",
+});
 
-export async function deleteGame(authId, gameId, token){
-  const response = await axios.delete(`${Host.url}/games`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: {
+const httpClient = axios.create({
+  baseURL: Host.url,
+});
+
+httpClient.interceptors.request.use(async function (config) {
+  const token = localStorage.getItem("access_token");
+
+  config.headers.Authorization = token
+    ? `Bearer ${token}`
+    : await auth0.getTokenSilently();
+  return config;
+});
+
+export async function addGame(authId, gameScore, selectedDay) {
+  const response = await httpClient
+    .put("/games/add", {
       authId: authId,
-      gameObjectID: gameId,
-    }
-}).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+      score: gameScore,
+      date: selectedDay,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function getUserInfo(authId, token){
-  const response = await axios.get(`${Host.url}/players/find?authId=${authId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function pullGames(authId, token) {
+  const response = await httpClient
+    .get(`/games/find?authId=${authId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function loginUser(authId, email, playerName, token){
+export async function deleteGame(authId, gameId, token) {
+  const response = await httpClient
+    .delete("/games", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        authId: authId,
+        gameObjectID: gameId,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function getUserInfo(authId, token) {
+  const response = await httpClient
+    .get(`/players/find?authId=${authId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function loginUser(authId, email, playerName, token) {
   const profile = {
     authId: authId,
     email: email,
-    playerName: playerName
-  }
-  const response = await axios.post(`${Host.url}/players/login`, profile,
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+    playerName: playerName,
+  };
+  const response = await httpClient
+    .post("/players/login", profile, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function getPlayerName(authId, token){
-  const response = await axios.get(`${Host.url}/players/find/name?authId=${authId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function getPlayerName(authId, token) {
+  const response = await httpClient
+    .get(`/players/find/name?authId=${authId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function acceptFriendRequest(authId, friendAuthId, token){
-  const response = await axios.put(`${Host.url}/players/add/friend`,
-  {
-    authId: authId,
-    friendAuthId: friendAuthId,
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function acceptFriendRequest(authId, friendAuthId, token) {
+  const response = await httpClient
+    .put(
+      "/players/add/friend",
+      {
+        authId: authId,
+        friendAuthId: friendAuthId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function removeFriend(authId, friendAuthId, token){
-  const response = await axios.put(`${Host.url}/players/remove/friend`,
-  {
-    authId,
-    friendAuthId
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function removeFriend(authId, friendAuthId, token) {
+  const response = await httpClient
+    .put(
+      "/players/remove/friend",
+      {
+        authId,
+        friendAuthId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function removeNotification(authId, friendAuthId, data, token){
-  const response = await axios.put(`${Host.url}/notifications/removeNotification`,
-  {
-    authId: authId,
-    friendAuthId: friendAuthId,
-    data: data,
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function removeNotification(authId, friendAuthId, data, token) {
+  const response = await httpClient
+    .put(
+      "/notifications/removeNotification",
+      {
+        authId: authId,
+        friendAuthId: friendAuthId,
+        data: data,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function getPublicPlayerData(authId, friendAuthId, token){
-  const response = await axios.get(`${Host.url}/players/find/publicData?authId=${authId}&friendAuthId=${friendAuthId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function getPublicPlayerData(authId, friendAuthId, token) {
+  const response = await httpClient
+    .get(
+      `/players/find/publicData?authId=${authId}&friendAuthId=${friendAuthId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function sendFriendRequest(authId, friendAuthId, data, token){
-  const response = await axios.put(`${Host.url}/notifications/friendRequest`,
-  {
-    authId: authId,
-    friendAuthId: friendAuthId,
-    data: data,
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function sendFriendRequest(authId, friendAuthId, data, token) {
+  const response = await httpClient
+    .put(
+      `/notifications/friendRequest`,
+      {
+        authId: authId,
+        friendAuthId: friendAuthId,
+        data: data,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function updatePlayerInfo(authId, playerData, token){
-  const response = await axios.put(`${Host.url}/players/update`,
-  {
-    authId: authId,
-    ...playerData,
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(err => console.error(err));
-  if(!response) return {error: "Error, please refresh and try again", response: null}
-  return {error: null, response: response};
+export async function updatePlayerInfo(authId, playerData, token) {
+  const response = await httpClient
+    .put(
+      `/players/update`,
+      {
+        authId: authId,
+        ...playerData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
