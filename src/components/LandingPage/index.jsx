@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Trash2 } from "react-feather";
 import {
   Button,
+  Box,
   Hidden,
   Grid,
   Table,
@@ -79,6 +80,21 @@ const LandingPage = () => {
                   improve your 10 frames.
                 </Hidden>
               </Typography>
+              <Box
+                marginTop={4}
+                marginBottom={4}
+                display="flex"
+                justifyContent="center"
+              >
+                <Button
+                  className="LandingPage-login-signup"
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => loginWithRedirect()}
+                >
+                  Click here to get started today!
+                </Button>
+              </Box>
             </div>
           </Grid>
 
