@@ -103,7 +103,7 @@ const LandingPage = () => {
               <img
                 className="LandingPage-figure"
                 src={Figure}
-                alt="clipart-stats"
+                alt="Bowling Stats Clipart"
               />
             </Grid>
           </Hidden>
