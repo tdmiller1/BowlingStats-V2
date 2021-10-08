@@ -21,14 +21,14 @@ const Leaderboard = ({ profile }) => {
 
   function serializePlayer(player) {
     return {
-      username: player.playerName,
-      maxScore: player.highScore,
-      average: player.average,
+      username: player?.playerName,
+      maxScore: player?.highScore,
+      average: player?.average,
     };
   }
 
   const innerFunction = useCallback((friends) => {
-    friends.forEach((friend) => {
+    friends?.forEach((friend) => {
       getUserInfo(friend.authId).then((e) => {
         if (e.response?.data) {
           setFriendData((oldArray) => [
@@ -41,7 +41,7 @@ const Leaderboard = ({ profile }) => {
   }, []);
 
   useEffect(() => {
-    if (friends.length > 0) {
+    if (friends?.length > 0) {
       setFriendData([]);
       innerFunction(friends);
     }
@@ -77,10 +77,10 @@ const Leaderboard = ({ profile }) => {
           icon={<Globe />}
         />
       </BottomNavigation>
-      {value === LEADERBOARD.FRIENDS && friendData.length > 0 && (
+      {value === LEADERBOARD.FRIENDS && friendData?.length > 0 && (
         <LeaderboardTable users={friendData} />
       )}
-      {value === LEADERBOARD.FRIENDS && friendData.length === 0 && (
+      {value === LEADERBOARD.FRIENDS && friendData?.length === 0 && (
         <LeaderboardTable users={defaultFriendData} />
       )}
       {value === LEADERBOARD.GLOBAL && <LeaderboardTable users={globalUsers} />}
