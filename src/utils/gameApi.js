@@ -233,3 +233,42 @@ export async function updatePlayerInfo(authId, playerData, token) {
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
 }
+
+export async function getSubmissions() {
+  // const response = await httpClient
+  //   .get(`/submissions`)
+  //   .catch((err) => console.error(err));
+  // if (!response)
+  //   return { error: "Error, please refresh and try again", response: null };
+  // return { error: null, response: response };
+  // mockdata
+  return {
+    error: null,
+    response: {
+      submissions: [
+        {
+          id: 1,
+          authId: "google-auth2-12432j13k21",
+          imgSrc:
+            "https://bowling-stats-submissions.s3.us-east-2.amazonaws.com/image.png",
+          status: "pending",
+          score: 250,
+          dateSubmitted: new Date().toDateString(),
+        },
+        {
+          id: 2,
+          authId: "google-auth2-12432j13k21",
+          imgSrc:
+            "https://bowling-stats-submissions.s3.us-east-2.amazonaws.com/saD.jpg",
+          status: "pending",
+          score: 280,
+          dateSubmitted: new Date().toDateString(),
+        },
+      ],
+    },
+  };
+}
+
+export async function gradeSubmission(submissionId, status) {
+  return { error: null, response: "success" };
+}
