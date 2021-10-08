@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Check, X } from "react-feather";
-import { Typography, TableCell, TableRow, IconButton } from "@material-ui/core";
+import {
+  Typography,
+  TableCell,
+  TableRow,
+  IconButton,
+  Tooltip,
+} from "@material-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import {
@@ -44,6 +50,17 @@ const NotificationsTableRow = ({
     });
   };
 
+  function formatType(type) {
+    switch (type) {
+      case "friendRequest":
+        return "Friend Request";
+      case "gameSubmissionReview":
+        return "Review Required";
+      default:
+        return "";
+    }
+  }
+
   return (
     <TableRow key={sender}>
       <TableCell align="center">
@@ -53,28 +70,30 @@ const NotificationsTableRow = ({
       </TableCell>
       <TableCell align="center">
         <Typography variant="body1" gutterBottom>
-          {type}
+          {formatType(type)}
         </Typography>
       </TableCell>
       <TableCell align="center">
-        <IconButton
-          title="Accept"
-          className="iconButton-accept"
-          color="primary"
-          align="center"
-          onClick={handleAccept}
-        >
-          <Check />
-        </IconButton>
-        <IconButton
-          title="Delete"
-          className="iconButton-trash"
-          color="secondary"
-          align="center"
-          onClick={handleDeny}
-        >
-          <X />
-        </IconButton>
+        <Tooltip title="Accept friend request">
+          <IconButton
+            className="iconButton-accept"
+            color="primary"
+            align="center"
+            onClick={handleAccept}
+          >
+            <Check />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Deny friend request">
+          <IconButton
+            className="iconButton-trash"
+            color="secondary"
+            align="center"
+            onClick={handleDeny}
+          >
+            <X />
+          </IconButton>
+        </Tooltip>
       </TableCell>
     </TableRow>
   );

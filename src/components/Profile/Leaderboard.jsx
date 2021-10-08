@@ -41,7 +41,7 @@ const Leaderboard = ({ profile }) => {
   }, []);
 
   useEffect(() => {
-    if (friends.length > 0) {
+    if (friends?.length > 0) {
       setFriendData([]);
       innerFunction(friends);
     }
