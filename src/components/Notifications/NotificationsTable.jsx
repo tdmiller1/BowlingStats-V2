@@ -12,15 +12,24 @@ import NotificationsTableRow from "./NotificationsTableRow";
 import NotificationsSubmissionTableRow from "./NotificationsSubmissionTableRow";
 
 const NotificationsTable = ({ notifications, refreshCallback }) => {
-  const renderNotifications = ({ sender, receiver, type, data }) => {
+  const renderNotifications = ({
+    sender,
+    receiver,
+    type,
+    data,
+    score,
+    date,
+    _id: submissionId,
+  }) => {
     if (type === "gameSubmissionReview") {
       return (
         <NotificationsSubmissionTableRow
-          key={`${sender}_${receiver}_${type}`}
-          sender={sender}
-          receiver={receiver}
+          key={`${date}_${score}_${type}`}
+          submissionId={submissionId}
           type={type}
           data={data}
+          date={date}
+          score={score}
           refreshData={refreshCallback}
         />
       );

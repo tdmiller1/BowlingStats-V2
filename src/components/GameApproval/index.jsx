@@ -17,7 +17,7 @@ export default function GameApproval() {
   const refreshData = useCallback(() => {
     getSubmissions().then((response) => {
       if (response.error === null) {
-        setSubmissions(response.response.submissions);
+        setSubmissions(response.response.data);
       }
     });
   }, []);
@@ -27,7 +27,13 @@ export default function GameApproval() {
   }, [refreshData]);
 
   function handleSubmission(status) {
-    gradeSubmission(selectedSubmission.id, status).then((response) => {
+    gradeSubmission(
+      selectedSubmission.authId,
+      selectedSubmission.submissionId,
+      status,
+      selectedSubmission.score,
+      selectedSubmission.date
+    ).then((response) => {
       if (response.error === null) {
         setSelectedSubmission(null);
         openModal(false);
@@ -42,7 +48,7 @@ export default function GameApproval() {
         {submissions?.map((submission) => (
           <ListItem
             button
-            key={submission?.id}
+            key={`${submission?.authId} ${submission?.date}`}
             onClick={() => {
               setSelectedSubmission(submission);
               openModal(true);
@@ -50,7 +56,7 @@ export default function GameApproval() {
           >
             <Typography>{submission?.score}------</Typography>
             <Typography>{submission?.authId}------</Typography>
-            <Typography>{submission?.dateSubmitted}</Typography>
+            <Typography>{new Date(submission?.date).toDateString()}</Typography>
           </ListItem>
         ))}
       </List>
@@ -66,8 +72,14 @@ export default function GameApproval() {
             flexDirection="column"
             justifyContent="space-between"
           >
-            Score: {selectedSubmission?.score}
-            <img src={selectedSubmission?.imgSrc} alt="submission" />
+            <Typography>Score: {selectedSubmission?.score}</Typography>
+            {selectedSubmission?.imageUrl && (
+              <img src={selectedSubmission?.imageUrl} alt="submission" />
+            )}
+            <Typography>
+              {selectedSubmission?.statement &&
+                `Statement: ${selectedSubmission?.statement}`}
+            </Typography>
             <Box display="flex" justifyContent="space-between">
               <Button
                 onClick={() => handleSubmission("approve")}

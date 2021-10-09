@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Camera, Edit2, X } from "react-feather";
 import {
   Typography,
@@ -12,14 +13,22 @@ import {
   TextField,
 } from "@material-ui/core";
 import ImageUploading from "react-images-uploading";
+import {
+  submitReviewImage,
+  deleteSubmission,
+  submitReviewState,
+} from "../../utils/gameApi";
+import AWS from "aws-sdk";
 
 const NotificationsSubmissionTableRow = ({
-  sender,
-  receiver,
+  date,
   type,
-  data,
+  submissionId,
   refreshData,
+  score,
 }) => {
+  const { user } = useAuth0();
+  const s3 = new AWS.S3();
   const handleSubmission = () => {
     setPhotoDialog(true);
   };
@@ -28,8 +37,9 @@ const NotificationsSubmissionTableRow = ({
     setSubmissionResponseDialog(true);
   };
 
-  const handleDelete = () => {
-    // Send delete call
+  const handleDelete = async () => {
+    await deleteSubmission(user.sub, submissionId);
+    refreshData();
   };
 
   function formatType(type) {
@@ -60,15 +70,46 @@ const NotificationsSubmissionTableRow = ({
     // data for submit
     setImages(imageList);
   };
+  const submitImage = async () => {
+    const buf = Buffer.from(
+      images[0].data_url.replace(/^data:image\/\w+;base64,/, ""),
+      "base64"
+    );
 
-  const submitImage = () => {
-    // Submit Image to API
-    handleClose();
-    refreshData();
+    var params = {
+      Bucket: "bowling-stats-submissions",
+      Key: "folder/" + new Date() + images[0].data_url,
+      Body: buf,
+      ContentEncoding: "base64",
+      ContentType: "image/jpeg",
+    };
+
+    s3.upload(params, async function (err, data) {
+      if (err) {
+        console.error(err);
+      }
+      if (data) {
+        await submitReviewImage(
+          user.sub,
+          submissionId,
+          data.location,
+          date,
+          score
+        );
+        handleClose();
+        refreshData();
+      }
+    });
   };
 
-  const submitStatement = () => {
-    // Submit Text Statement to API
+  const submitStatement = async () => {
+    await submitReviewState(
+      user.sub,
+      submissionId,
+      date,
+      submissionText,
+      score
+    );
     handleClose();
     refreshData();
   };
@@ -77,7 +118,7 @@ const NotificationsSubmissionTableRow = ({
 
   return (
     <>
-      <TableRow key={sender}>
+      <TableRow key={date}>
         <TableCell align="center">
           <Typography variant="body1" gutterBottom>
             Bowling Stats Admin
@@ -183,6 +224,7 @@ const NotificationsSubmissionTableRow = ({
                   <Typography variant="h4">
                     Submit Photo of Game Score
                   </Typography>
+                  <Typography variant="h5">Score: {score}</Typography>
                   <Box
                     padding={2}
                     justifyContent="center"
@@ -233,13 +275,15 @@ const NotificationsSubmissionTableRow = ({
                       </Box>
                     ))}
                   </Box>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitImage}
-                  >
-                    Submit Image for Review
-                  </Button>
+                  {images.length === 1 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={submitImage}
+                    >
+                      Submit Image for Review
+                    </Button>
+                  )}
                 </Box>
               )}
             </ImageUploading>

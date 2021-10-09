@@ -235,40 +235,87 @@ export async function updatePlayerInfo(authId, playerData, token) {
 }
 
 export async function getSubmissions() {
-  // const response = await httpClient
-  //   .get(`/submissions`)
-  //   .catch((err) => console.error(err));
-  // if (!response)
-  //   return { error: "Error, please refresh and try again", response: null };
-  // return { error: null, response: response };
-  // mockdata
-  return {
-    error: null,
-    response: {
-      submissions: [
-        {
-          id: 1,
-          authId: "google-auth2-12432j13k21",
-          imgSrc:
-            "https://bowling-stats-submissions.s3.us-east-2.amazonaws.com/image.png",
-          status: "pending",
-          score: 250,
-          dateSubmitted: new Date().toDateString(),
-        },
-        {
-          id: 2,
-          authId: "google-auth2-12432j13k21",
-          imgSrc:
-            "https://bowling-stats-submissions.s3.us-east-2.amazonaws.com/saD.jpg",
-          status: "pending",
-          score: 280,
-          dateSubmitted: new Date().toDateString(),
-        },
-      ],
-    },
-  };
+  const response = await httpClient
+    .get(`/admin/pendingReviews`)
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }
 
-export async function gradeSubmission(submissionId, status) {
-  return { error: null, response: "success" };
+export async function gradeSubmission(
+  authId,
+  submissionId,
+  status,
+  score,
+  date
+) {
+  const response = await httpClient
+    .put("/admin/grade", {
+      authId,
+      submissionId,
+      status,
+      score,
+      date,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function deleteSubmission(authId, submissionId) {
+  const response = await httpClient
+    .delete("/players/submission", {
+      data: {
+        authId,
+        submissionId,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function submitReviewImage(
+  authId,
+  submissionId,
+  imageUrl,
+  date,
+  score
+) {
+  const response = await httpClient
+    .post("/admin/reviewImage", {
+      authId,
+      submissionId,
+      imageUrl,
+      date,
+      score,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function submitReviewState(
+  authId,
+  submissionId,
+  date,
+  statement,
+  score
+) {
+  const response = await httpClient
+    .post("/admin/reviewStatement", {
+      authId,
+      submissionId,
+      date,
+      statement,
+      score,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
 }

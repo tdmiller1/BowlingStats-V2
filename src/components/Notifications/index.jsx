@@ -25,13 +25,13 @@ const Notifications = ({ refreshCallback, profile, setProfile }) => {
   return (
     <div className="flex flex-col lg:flex-row m-3 md:m-4 justify-evenly">
       <Grid container className="GameChart-ParentGrid">
-        {!_.isEmpty(profile?.notifications) && (
+        {(!_.isEmpty(profile?.notifications) || !_.isEmpty(profile?.sub)) && (
           <NotificationsTable
-            notifications={profile?.notifications}
+            notifications={[...profile?.notifications, ...profile?.submissions]}
             refreshCallback={refreshCallback}
           />
         )}
-        {_.isEmpty(profile?.notifications) && (
+        {_.isEmpty(profile?.notifications) && _.isEmpty(profile?.submissions) && (
           <Typography variant="subtitle1" color="inherit" className="font-bold">
             No Notifications
           </Typography>
