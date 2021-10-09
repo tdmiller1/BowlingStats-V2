@@ -11,6 +11,7 @@ import LandingPage from "./components/LandingPage";
 import Home from "./components/Home/index";
 import Callback from "./components/Callback";
 import My404Component from "./components/My404Component";
+import GameApproval from "./components/GameApproval/index";
 
 import { loginUser } from "./utils/gameApi";
 
@@ -51,6 +52,9 @@ const ApplicationRouter = (props) => {
               }}
             />
           )}
+        </Route>
+        <Route path={process.env.REACT_APP_APPROVAL_ROUTE}>
+          <GameApproval {...props} />
         </Route>
         <Route path="*" exact={true} component={My404Component} />
       </Switch>

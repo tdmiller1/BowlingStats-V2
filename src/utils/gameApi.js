@@ -233,3 +233,89 @@ export async function updatePlayerInfo(authId, playerData, token) {
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
 }
+
+export async function getSubmissions() {
+  const response = await httpClient
+    .get(`/admin/pendingReviews`)
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function gradeSubmission(
+  authId,
+  submissionId,
+  status,
+  score,
+  date
+) {
+  const response = await httpClient
+    .put("/admin/grade", {
+      authId,
+      submissionId,
+      status,
+      score,
+      date,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function deleteSubmission(authId, submissionId) {
+  const response = await httpClient
+    .delete("/players/submission", {
+      data: {
+        authId,
+        submissionId,
+      },
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function submitReviewImage(
+  authId,
+  submissionId,
+  imageUrl,
+  date,
+  score
+) {
+  const response = await httpClient
+    .post("/admin/reviewImage", {
+      authId,
+      submissionId,
+      imageUrl,
+      date,
+      score,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
+
+export async function submitReviewState(
+  authId,
+  submissionId,
+  date,
+  statement,
+  score
+) {
+  const response = await httpClient
+    .post("/admin/reviewStatement", {
+      authId,
+      submissionId,
+      date,
+      statement,
+      score,
+    })
+    .catch((err) => console.error(err));
+  if (!response)
+    return { error: "Error, please refresh and try again", response: null };
+  return { error: null, response: response };
+}
