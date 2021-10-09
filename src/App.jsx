@@ -9,8 +9,8 @@ import AWS from "aws-sdk";
 
 AWS.config.update({
   region: "us-east-1",
-  accessKeyId: "AKIA3W3TCARARV5X5HIE",
-  secretAccessKey: "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",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
 const App = () => {

@@ -77,7 +77,7 @@ const NotificationsSubmissionTableRow = ({
     );
 
     var params = {
-      Bucket: "bowling-stats-submissions",
+      Bucket: process.env.AWS_S3_BUCKET,
       Key: "folder/" + new Date() + images[0].data_url,
       Body: buf,
       ContentEncoding: "base64",
