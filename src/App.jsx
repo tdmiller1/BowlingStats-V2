@@ -8,7 +8,7 @@ import ApplicationRouter from "./ApplicationRouter";
 import AWS from "aws-sdk";
 
 AWS.config.update({
-  region: "us-east-1",
+  region: process.env.AWS_REGION,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
