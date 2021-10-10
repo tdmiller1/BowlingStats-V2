@@ -2,6 +2,7 @@ import axios from "axios";
 import Host from "../config";
 
 import { Auth0Client } from "@auth0/auth0-spa-js";
+import Honeybadger from "@honeybadger-io/js";
 
 const auth0 = new Auth0Client({
   domain: process.env.REACT_APP_AUTH0_DOMAIN,
@@ -37,9 +38,13 @@ export async function addGame(authId, gameScore, selectedDay) {
       score: gameScore,
       date: selectedDay,
     })
-    .catch((err) => console.error(err));
-  if (!response)
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
+  if (!response) {
     return { error: "Error, please refresh and try again", response: null };
+  }
   return { error: null, response: response };
 }
 
@@ -50,7 +55,10 @@ export async function pullGames(authId, token) {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -67,7 +75,10 @@ export async function deleteGame(authId, gameId, token) {
         gameObjectID: gameId,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -80,7 +91,10 @@ export async function getUserInfo(authId, token) {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -98,7 +112,10 @@ export async function loginUser(authId, email, playerName, token) {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -111,7 +128,10 @@ export async function getPlayerName(authId, token) {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -131,7 +151,10 @@ export async function acceptFriendRequest(authId, friendAuthId, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -151,7 +174,10 @@ export async function removeFriend(authId, friendAuthId, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -172,7 +198,10 @@ export async function removeNotification(authId, friendAuthId, data, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -188,7 +217,10 @@ export async function getPublicPlayerData(authId, friendAuthId, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -209,7 +241,10 @@ export async function sendFriendRequest(authId, friendAuthId, data, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -229,7 +264,10 @@ export async function updatePlayerInfo(authId, playerData, token) {
         },
       }
     )
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -238,7 +276,10 @@ export async function updatePlayerInfo(authId, playerData, token) {
 export async function getSubmissions() {
   const response = await httpClient
     .get(`/admin/pendingReviews`)
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -259,7 +300,10 @@ export async function gradeSubmission(
       score,
       date,
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -273,7 +317,10 @@ export async function deleteSubmission(authId, submissionId) {
         submissionId,
       },
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -294,7 +341,10 @@ export async function submitReviewImage(
       date,
       score,
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };
@@ -315,7 +365,10 @@ export async function submitReviewState(
       statement,
       score,
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      Honeybadger.notify(err);
+      console.error(err);
+    });
   if (!response)
     return { error: "Error, please refresh and try again", response: null };
   return { error: null, response: response };

@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Honeybadger, HoneybadgerErrorBoundary } from "@honeybadger-io/react";
 import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "./components/useDarkMode";
 import { GlobalStyle } from "./components/GlobalStyle";
@@ -13,6 +14,11 @@ AWS.config.update({
   secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
 });
 
+Honeybadger.configure({
+  apiKey: process.env.REACT_APP_HONEYBADGER_API_KEY,
+  environment: process.env.NODE_ENV,
+});
+
 const App = () => {
   const { isLoading, error } = useAuth0();
   const [theme, themeToggler] = useDarkMode();
@@ -22,14 +28,16 @@ const App = () => {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <ThemeProvider theme={themeMode}>
-      <>
-        <GlobalStyle />
-        <div className="App">
-          <ApplicationRouter theme={theme} toggleTheme={themeToggler} />
-        </div>
-      </>
-    </ThemeProvider>
+    <HoneybadgerErrorBoundary honeybadger={Honeybadger}>
+      <ThemeProvider theme={themeMode}>
+        <>
+          <GlobalStyle />
+          <div className="App">
+            <ApplicationRouter theme={theme} toggleTheme={themeToggler} />
+          </div>
+        </>
+      </ThemeProvider>
+    </HoneybadgerErrorBoundary>
   );
 };
 

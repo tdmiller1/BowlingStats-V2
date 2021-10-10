@@ -34,7 +34,11 @@ const SidePanel = ({ theme, addGameCallback }) => {
       setErrorMessage("Enter Date of Game");
     } else {
       addGame(user.sub, gameScore, selectedDay).then((result) => {
-        result.error ? setErrorMessage(result.error) : resetGameInfo();
+        if (result.error) {
+          setErrorMessage(result.error);
+          return;
+        }
+        resetGameInfo();
         if (result.response.data.flaggedForReview) {
           flaggedForSubmissionAlert();
         }
