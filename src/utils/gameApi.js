@@ -22,7 +22,8 @@ async function getToken() {
 
 httpClient.interceptors.request.use(async function (config) {
   const token = localStorage.getItem("access_token");
-
+  config.headers.Pragma = "no-cache";
+  config.headers["Cache-Control"] = "no-cache";
   config.headers.Authorization = token
     ? `Bearer ${token}`
     : `Bearer ${await getToken()}`;
