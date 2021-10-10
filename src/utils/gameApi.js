@@ -16,15 +16,18 @@ const httpClient = axios.create({
 });
 
 async function getToken() {
-  const token = await auth0.getTokenSilently();
-  localStorage.setItem("access_token", token);
-  return token;
+  try {
+    const token = await auth0.getTokenSilently();
+    localStorage.setItem("access_token", token);
+    return token;
+  } catch (error) {
+    Honeybadger.notify(error);
+  }
 }
 
-httpClient.interceptors.request.use(async function (config) {
+httpClient.interceptors.request.use(async function (config, err) {
+  if (err) Honeybadger.notify(err);
   const token = localStorage.getItem("access_token");
-  config.headers.Pragma = "no-cache";
-  config.headers["Cache-Control"] = "no-cache";
   config.headers.Authorization = token
     ? `Bearer ${token}`
     : `Bearer ${await getToken()}`;
