@@ -78,7 +78,7 @@ const NotificationsSubmissionTableRow = ({
 
     var params = {
       Bucket: process.env.REACT_APP_AWS_S3_BUCKET,
-      Key: "folder/" + new Date() + images[0].data_url,
+      Key: user.sub + "/" + new Date(),
       Body: buf,
       ContentEncoding: "base64",
       ContentType: "image/jpeg",
