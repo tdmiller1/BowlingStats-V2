@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Trash2 } from "react-feather";
 import {
   Button,
+  Chip,
   Box,
   Hidden,
   Grid,
@@ -14,12 +15,13 @@ import {
   Divider,
   Typography,
   IconButton,
+  withWidth,
 } from "@material-ui/core";
 import { Chart } from "primereact/chart";
 import Figure from "../../assets/figure-1.jpg";
 import "./LandingPage.scss";
 
-const LandingPage = () => {
+const LandingPage = ({ width }) => {
   const { loginWithRedirect } = useAuth0();
   const data = {
     labels: ["Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6"],
@@ -44,42 +46,63 @@ const LandingPage = () => {
     <div>
       <Grid container className="LandingPage-container">
         <Grid className="LandingPage-header flex justify-between" item xs={12}>
-          <Typography className="LandingPage-logoText" variant="h5">
-            BowlingStats
-          </Typography>
-          <div className="LandingPage-header-buttons">
-            <Button
-              className="LandingPage-login"
-              onClick={() => loginWithRedirect()}
-            >
-              Log in
-            </Button>
-            <Button
-              className="LandingPage-login-signup"
-              variant="contained"
-              color="secondary"
-              onClick={() => loginWithRedirect()}
-            >
-              Sign up
-            </Button>
-          </div>
+          {width !== "xs" && (
+            <Typography className="LandingPage-logoText" variant="h5">
+              BowlingStats
+            </Typography>
+          )}
+          <Box marginBottom={width === "xs" ? 3 : 0}>
+            <div className="LandingPage-header-buttons">
+              <Button
+                variant="outlined"
+                color="secondary"
+                className="LandingPage-login"
+                onClick={() => loginWithRedirect()}
+              >
+                <Typography variant="button">Log in</Typography>
+              </Button>
+              <Button
+                className="LandingPage-login-signup"
+                variant="contained"
+                color="secondary"
+                onClick={() => loginWithRedirect()}
+              >
+                <Typography variant="button">Sign up</Typography>
+              </Button>
+            </div>
+          </Box>
         </Grid>
 
         <div className="flex flex-row">
           <Grid alignItems="center" justify="center" direction="row" container>
-            <div>
-              <Typography className="LandingPage-figureOneTitle" variant="h3">
-                Track and Save Bowling Games
-              </Typography>
-              <Typography className="LandingPage-paragraph">
-                See real-time updates and tracking analytics for all of your
-                recent and past games. Table view and Graph view provided below.
-                <Hidden only={["sm", "xs"]}>
-                  View every game you have played and how you have improved.
-                  Also can provide progression and deliver insight on how to
-                  improve your 10 frames.
-                </Hidden>
-              </Typography>
+            <div className="text-center">
+              <Box marginBottom={2}>
+                <Typography
+                  className="LandingPage-figureOneTitle"
+                  variant={width === "xs" ? "h4" : "h3"}
+                >
+                  Track and Save Bowling Games
+                </Typography>
+              </Box>
+
+              <Grid container spacing={3} className="justify-center">
+                <Grid item>
+                  <Chip color="primary" label="Real-Time Updates" />
+                </Grid>
+                <Grid item>
+                  <Chip color="primary" label="Compete With Friends" />
+                </Grid>
+                {width !== "xs" && (
+                  <>
+                    <Grid item>
+                      <Chip label="Track Games Over Time" />
+                    </Grid>
+                    <Grid item>
+                      <Chip label="Analyze Progress" />
+                    </Grid>
+                  </>
+                )}
+              </Grid>
               <Box
                 marginTop={4}
                 marginBottom={4}
@@ -92,7 +115,9 @@ const LandingPage = () => {
                   color="secondary"
                   onClick={() => loginWithRedirect()}
                 >
-                  Click here to get started today!
+                  <Typography variant="button">
+                    Click here to get started today!
+                  </Typography>
                 </Button>
               </Box>
             </div>
@@ -109,9 +134,11 @@ const LandingPage = () => {
           </Hidden>
         </div>
 
+        {/* <Hidden only={["xs"]}> */}
         <Grid container direction="row" justify="center">
           <Chart className="LandingPage-chart" type="line" data={data} />
         </Grid>
+        {/* </Hidden> */}
 
         <Grid container direction="row" justify="center">
           <Table className="LandingPage-table">
@@ -125,7 +152,7 @@ const LandingPage = () => {
             <TableBody>
               <TableRow>
                 <TableCell align="center">250</TableCell>
-                <TableCell align="center">March 6, 2019</TableCell>
+                <TableCell align="center">March 6, 2023</TableCell>
                 <TableCell align="center">
                   <IconButton title="Delete">
                     <Trash2 className="iconButton-trash" />
@@ -134,7 +161,7 @@ const LandingPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell align="center">225</TableCell>
-                <TableCell align="center">March 13, 2019</TableCell>
+                <TableCell align="center">January 13, 2023</TableCell>
                 <TableCell align="center">
                   <IconButton title="Delete">
                     <Trash2 className="iconButton-trash" />
@@ -143,7 +170,7 @@ const LandingPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell align="center">270</TableCell>
-                <TableCell align="center">March 20, 2019</TableCell>
+                <TableCell align="center">July 20, 2022</TableCell>
                 <TableCell align="center">
                   <IconButton title="Delete">
                     <Trash2 className="iconButton-trash" />
@@ -152,7 +179,7 @@ const LandingPage = () => {
               </TableRow>
               <TableRow>
                 <TableCell align="center">240</TableCell>
-                <TableCell align="center">March 27, 2019</TableCell>
+                <TableCell align="center">March 27, 2021</TableCell>
                 <TableCell align="center">
                   <IconButton title="Delete">
                     <Trash2 className="iconButton-trash" />
@@ -189,4 +216,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default withWidth()(LandingPage);
