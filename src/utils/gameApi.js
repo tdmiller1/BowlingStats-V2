@@ -9,6 +9,7 @@ const auth0 = new Auth0Client({
   client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
   useRefreshTokens: true,
+  cacheLocation: "localstorage",
 });
 
 const httpClient = axios.create({
