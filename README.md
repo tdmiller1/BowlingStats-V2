@@ -1,5 +1,7 @@
 # Bowling-Stats-V2
 
+Website to track bowling scores over time and compete with friends.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -29,6 +31,6 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Learn More
 
-To view the project live, visit [https://bowlingstats.app](https://bowlingstats.app)
+To view the project live, visit [https://bowling-stat-tracker.herokuapp.com/](https://bowling-stat-tracker.herokuapp.com/)
 
 The app is hosted via Heroku.
