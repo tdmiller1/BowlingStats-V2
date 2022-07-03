@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -8,17 +8,19 @@ import {
   TableFooter,
   TablePagination,
   IconButton,
-Typography } from '@material-ui/core';
+  Typography,
+  withWidth,
+} from "@material-ui/core";
 
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import FirstPageIcon from "@material-ui/icons/FirstPage";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import LastPageIcon from "@material-ui/icons/LastPage";
 
-import LeaderboardTableRow from './LeaderboardTableRow';
+import LeaderboardTableRow from "./LeaderboardTableRow";
 
 function TablePaginationActions(props) {
-  const { count, page, rowsPerPage, onChangePage } = props;
+  const { count, page, rowsPerPage, onChangePage, width } = props;
 
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
@@ -38,14 +40,20 @@ function TablePaginationActions(props) {
 
   return (
     <div className="Profile-Table-Footer flex">
+      {width !== "xs" && width !== "sm" && (
+        <IconButton
+          onClick={handleFirstPageButtonClick}
+          disabled={page === 0}
+          aria-label="first page"
+        >
+          <FirstPageIcon />
+        </IconButton>
+      )}
       <IconButton
-        onClick={handleFirstPageButtonClick}
+        onClick={handleBackButtonClick}
         disabled={page === 0}
-        aria-label="first page"
+        aria-label="previous page"
       >
-        <FirstPageIcon />
-      </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         <KeyboardArrowLeft />
       </IconButton>
       <IconButton
@@ -55,22 +63,24 @@ function TablePaginationActions(props) {
       >
         <KeyboardArrowRight />
       </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        <LastPageIcon />
-      </IconButton>
+      {width !== "xs" && width !== "sm" && (
+        <IconButton
+          onClick={handleLastPageButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label="last page"
+        >
+          <LastPageIcon />
+        </IconButton>
+      )}
     </div>
   );
 }
 
-function compare( a, b ) {
-  if ( a.maxScore < b.maxScore ){
+function compare(a, b) {
+  if (a.maxScore < b.maxScore) {
     return 1;
   }
-  if ( a.maxScore > b.maxScore ){
+  if (a.maxScore > b.maxScore) {
     return -1;
   }
   return 0;
@@ -78,12 +88,15 @@ function compare( a, b ) {
 
 const LeaderboardTable = ({ users }) => {
   users.sort(compare);
-  const renderTableRows = (user, index) => <LeaderboardTableRow key={index} {...user} />
+  const renderTableRows = (user, index) => (
+    <LeaderboardTableRow key={index} {...user} />
+  );
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -116,7 +129,8 @@ const LeaderboardTable = ({ users }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {users && (rowsPerPage > 0
+        {users &&
+          (rowsPerPage > 0
             ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : users
           ).map(renderTableRows)}
@@ -129,23 +143,23 @@ const LeaderboardTable = ({ users }) => {
       <TableFooter>
         <TableRow>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
             colSpan={3}
             count={users.length}
             rowsPerPage={rowsPerPage}
             page={page}
             SelectProps={{
-              inputProps: { 'aria-label': 'rows per page' },
+              inputProps: { "aria-label": "rows per page" },
               native: true,
             }}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
-            ActionsComponent={TablePaginationActions}
+            ActionsComponent={withWidth()(TablePaginationActions)}
           />
         </TableRow>
       </TableFooter>
     </Table>
   );
-}
+};
 
-export default LeaderboardTable;
+export default withWidth()(LeaderboardTable);

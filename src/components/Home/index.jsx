@@ -1,54 +1,52 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  Switch,
-  Route,
-  useRouteMatch,
-} from "react-router-dom";
-import { Hidden, Drawer } from '@material-ui/core';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import React, { useEffect, useState, useCallback } from "react";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Hidden, Drawer } from "@material-ui/core";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
-import Profile from '../Profile/index';
-import Header from '../Header';
-import SidePanel from '../SidePanel';
-import Dashboard from './Dashboard';
-import { getUserInfo } from '../../utils/gameApi';
-import Notifications from '../Notifications/index';
-import PublicProfile from '../PublicProfile/index';
-import ReportBug from '../ReportBug';
+import Profile from "../Profile/index";
+import Header from "../Header";
+import SidePanel from "../SidePanel";
+import Dashboard from "./Dashboard";
+import { getUserInfo } from "../../utils/gameApi";
+import Notifications from "../Notifications/index";
+import PublicProfile from "../PublicProfile/index";
+import ReportBug from "../ReportBug";
 
 const Home = (props) => {
   const { theme } = props;
   const [games, setGames] = useState([]);
   const [profile, setProfile] = useState(null);
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user } = useAuth0();
 
   const refreshData = useCallback(() => {
-    getAccessTokenSilently().then((token) => {
-      getUserInfo(user.sub, token).then(e => {
-        if(e.response?.data) {
-          setProfile(e.response.data);
-          setGames(e.response?.data?.games?.reverse());
-        }
-      })
+    getUserInfo(user.sub).then((e) => {
+      if (e.response?.data) {
+        setProfile(e.response.data);
+        setGames(e.response?.data?.games?.reverse());
+      }
     });
-  }, [getAccessTokenSilently, user]);
+  }, [user]);
 
   useEffect(() => {
     refreshData();
-  },[refreshData])
+  }, [refreshData]);
 
-  const [ drawerOpen, setDrawerOpen ] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   let { path } = useRouteMatch();
 
-  function toggleDrawer(){
+  function toggleDrawer() {
     setDrawerOpen(!drawerOpen);
   }
 
   return (
     <>
-      <Header toggleDrawer={toggleDrawer} {...props}/>
-      <Hidden only={["md","lg","xl"]}>
-        <Drawer className={`Drawer-${theme}`} open={drawerOpen} onClose={toggleDrawer}>
+      <Header toggleDrawer={toggleDrawer} {...props} />
+      <Hidden only={["md", "lg", "xl"]}>
+        <Drawer
+          className={`Drawer-${theme}`}
+          open={drawerOpen}
+          onClose={toggleDrawer}
+        >
           <SidePanel {...props} addGameCallback={refreshData} />
         </Drawer>
       </Hidden>
@@ -67,7 +65,12 @@ const Home = (props) => {
         {profile && (
           <>
             <Route path={`${path}/notifications`}>
-              <Notifications refreshCallback={refreshData} profile={profile} setProfile={setProfile} {...props} />
+              <Notifications
+                refreshCallback={refreshData}
+                profile={profile}
+                setProfile={setProfile}
+                {...props}
+              />
             </Route>
             <Route path={`${path}/u/`}>
               <PublicProfile refreshCallback={refreshData} />
@@ -76,11 +79,11 @@ const Home = (props) => {
               <ReportBug />
             </Route>
           </>
-          )}
+        )}
       </Switch>
     </>
-  )
-}
+  );
+};
 
 export default withAuthenticationRequired(Home, {
   onRedirecting: () => <div>Loading</div>,
