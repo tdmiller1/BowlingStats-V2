@@ -6,8 +6,8 @@ export function useAuth0Token() {
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    if (!token && localStorage.getItem("access_token")) {
-      setToken(localStorage.getItem("access_token"));
+    if (!token && localStorage.getItem("@tuckermillerdev/access_token")) {
+      setToken(localStorage.getItem("@tuckermillerdev/access_token"));
     } else if (!token) {
       setToken(getAccessTokenSilently());
     }

@@ -23,6 +23,7 @@
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
     "fs": "0.0.1-security",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "node-sass": "^7.0.1",

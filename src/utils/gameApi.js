@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import Host from "../config";
 
 import { Auth0Client } from "@auth0/auth0-spa-js";
@@ -19,7 +20,7 @@ const httpClient = axios.create({
 async function getToken() {
   try {
     const token = await auth0.getTokenSilently();
-    localStorage.setItem("access_token", token);
+    localStorage.setItem("@tuckermillerdev/access_token", token);
     return token;
   } catch (error) {
     Honeybadger.notify(error);
@@ -27,11 +28,21 @@ async function getToken() {
 }
 
 httpClient.interceptors.request.use(async function (config, err) {
-  if (err) Honeybadger.notify(err);
-  const token = localStorage.getItem("access_token");
-  config.headers.Authorization = token
-    ? `Bearer ${token}`
-    : `Bearer ${await getToken()}`;
+  if (err) {
+    console.log(err);
+    Honeybadger.notify(err);
+  }
+  let token = localStorage.getItem("@tuckermillerdev/access_token");
+  try {
+    if (jwt_decode(token).exp < Date.now() / 1000) {
+      console.log("EXP");
+      token = false;
+      localStorage.removeItem("@tuckermillerdev/access_token");
+    }
+  } catch (error) {
+    config.headers.Authorization = `Bearer ${await getToken()}`;
+  }
+  config.headers.Authorization = `Bearer ${token}}`;
   return config;
 });
 
@@ -43,6 +54,7 @@ export async function addGame(authId, gameScore, selectedDay) {
       date: selectedDay,
     })
     .catch((err) => {
+      console.log(err);
       Honeybadger.notify(err);
       console.error(err);
     });

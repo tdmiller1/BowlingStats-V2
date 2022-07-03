@@ -75,7 +75,7 @@ const Header = ({ theme, toggleTheme, toggleDrawer }) => {
             color="inherit"
             className="auth-button"
             onClick={() => {
-              localStorage.removeItem("access_token");
+              localStorage.removeItem("@tuckermillerdev/access_token");
               logout({ returnTo: window.location.origin });
             }}
           >
