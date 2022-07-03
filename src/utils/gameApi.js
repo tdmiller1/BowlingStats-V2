@@ -42,7 +42,7 @@ httpClient.interceptors.request.use(async function (config, err) {
   } catch (error) {
     config.headers.Authorization = `Bearer ${await getToken()}`;
   }
-  config.headers.Authorization = `Bearer ${token}}`;
+  config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
