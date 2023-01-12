@@ -20,7 +20,6 @@ import {
 import { Chart } from "primereact/chart";
 import Figure from "../../assets/figure-1.jpg";
 import "./LandingPage.scss";
-import { Router } from "react-router-dom";
 
 const LandingPage = ({ width }) => {
   const { loginWithRedirect } = useAuth0();
